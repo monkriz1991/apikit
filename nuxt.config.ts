@@ -1,6 +1,10 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  experimental: {
+    viewTransition: true,
+  },
   modules: [
+    "@element-plus/nuxt",
     "nuxt-icon",
     [
       "@nuxtjs/google-fonts",
@@ -13,6 +17,7 @@ export default defineNuxtConfig({
       },
     ],
   ],
+  elementPlus: {},
   devtools: { enabled: true },
   css: ["@/node_modules/bulma/css/bulma.css", "@/assets/main.css"],
 });

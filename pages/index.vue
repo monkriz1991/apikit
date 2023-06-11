@@ -2,7 +2,7 @@
   <div class="container">
     <div class="ix-one">
       <div class="content ix-title">
-        <p><span>1</span><strong class="ml-4">"OpenApi" {</strong></p>
+        <p><span>1</span><strong class="ml-4">"UpApi" {</strong></p>
         <p><span>2</span><strong class="ml-6">Создавайте Api</strong></p>
         <p>
           <span>3</span
@@ -18,8 +18,6 @@
         <p><span>8</span><strong class="ml-6">]</strong></p>
         <p><span>9</span><strong class="ml-4">}</strong></p>
       </div>
-
-      <!-- <Icon name="🚀" /> -->
     </div>
   </div>
 </template>
