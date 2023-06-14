@@ -10,7 +10,7 @@
             <button class="button is-primary">Login</button>
           </nuxt-link>
 
-          <button
+          <!-- <button
             v-if="!$auth.user?.value?.email"
             class="button is-primary"
             @click="openLoginForm"
@@ -20,16 +20,9 @@
           <div v-if="$auth.user?.value?.email">
             {{ $auth.user.value?.email }} <br />
             <button @click="$auth.logout()">выйти</button>
-          </div>
+          </div> -->
         </div>
       </nav>
     </div>
-    <login-form ref="loginModal"></login-form>
   </div>
 </template>
-<script setup>
-const loginModal = ref(null);
-function openLoginForm() {
-  loginModal.value.$el.classList.add("is-active");
-}
-</script>

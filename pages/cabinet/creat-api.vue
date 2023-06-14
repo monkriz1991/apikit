@@ -36,11 +36,13 @@ const createShow = ref("create");
                 <CreateHand>
                   <template v-slot:link-back>
                     <button
-                      class="button is-small is-primary is-light"
+                      class="button is-small is-light mr-3"
                       @click="createShow = 'create'"
                     >
                       <span class="icon">
-                        <icon name="system-uicons:wrap-back" />
+                        <icon
+                          name="material-symbols:keyboard-backspace-rounded"
+                        />
                       </span>
                       <span>назад</span>
                     </button>
@@ -51,11 +53,13 @@ const createShow = ref("create");
                 <CreateFile>
                   <template v-slot:link-back>
                     <button
-                      class="button is-small is-primary is-light"
+                      class="button is-small is-light"
                       @click="createShow = 'create'"
                     >
                       <span class="icon">
-                        <icon name="system-uicons:wrap-back" />
+                        <icon
+                          name="material-symbols:keyboard-backspace-rounded"
+                        />
                       </span>
                       <span>назад</span>
                     </button>
@@ -66,11 +70,13 @@ const createShow = ref("create");
                 <CreateGoogle>
                   <template v-slot:link-back>
                     <button
-                      class="button is-small is-primary is-light"
+                      class="button is-small is-light"
                       @click="createShow = 'create'"
                     >
                       <span class="icon">
-                        <icon name="system-uicons:wrap-back" />
+                        <icon
+                          name="material-symbols:keyboard-backspace-rounded"
+                        />
                       </span>
                       <span>назад</span>
                     </button>

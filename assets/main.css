@@ -6,3 +6,8 @@
 .bd-snippet-preview {
   padding: 30px 0;
 }
+.link-back {
+  display: block;
+  width: 100%;
+  margin: 0 0 20px;
+}
