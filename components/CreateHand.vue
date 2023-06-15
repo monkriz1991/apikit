@@ -51,55 +51,51 @@ async function sendObject(item) {
 </script>
 <template>
   <div>
-    <ClientOnly>
-      <div class="cr-hand">
-        <div class="link-back">
-          <slot name="link-back"></slot>
-          <el-button class="button is-small" @click="addTab(editableTabsValue)">
-            add tab
-          </el-button>
-        </div>
-        <div class="columns">
-          <div class="column">
-            <el-tabs
-              v-model="editableTabsValue"
-              type="card"
-              class="demo-tabs"
-              closable
-              @tab-remove="removeTab"
+    <div class="cr-hand">
+      <div class="link-back">
+        <slot name="link-back"></slot>
+        <el-button class="button is-small" @click="addTab(editableTabsValue)">
+          add tab
+        </el-button>
+      </div>
+      <div class="columns">
+        <div class="column">
+          <el-tabs
+            v-model="editableTabsValue"
+            type="card"
+            class="demo-tabs"
+            closable
+            @tab-remove="removeTab"
+          >
+            <el-tab-pane
+              v-for="item in editableTabs"
+              :key="item.name"
+              :label="item.title"
+              :name="item.name"
             >
-              <el-tab-pane
-                v-for="item in editableTabs"
-                :key="item.name"
-                :label="item.title"
-                :name="item.name"
-              >
-                <div class="cr-hand-block">
-                  <KeepAlive>
-                    <component
-                      :is="item.content"
-                      @dynamicFormChange="counterForm"
-                    ></component>
-                  </KeepAlive>
-                </div>
-              </el-tab-pane>
-            </el-tabs>
-          </div>
-          <div class="column">
-            <div class="cr-hand-cod mt-5">
-              <div>
-                <pre>{{ dynamicFormPre }}</pre>
+              <div class="cr-hand-block">
+                <component
+                  :is="item.content"
+                  @dynamicFormChange="counterForm"
+                ></component>
               </div>
+            </el-tab-pane>
+          </el-tabs>
+        </div>
+        <div class="column">
+          <div class="cr-hand-cod mt-5">
+            <div>
+              <pre>{{ dynamicFormPre }}</pre>
             </div>
           </div>
         </div>
-        <div class="buttons">
-          <button class="button is-primary" @click="sendObject(dynamicFormPre)">
-            Отправить
-          </button>
-        </div>
       </div>
-    </ClientOnly>
+      <div class="buttons">
+        <button class="button is-primary" @click="sendObject(dynamicFormPre)">
+          Сохранить
+        </button>
+      </div>
+    </div>
   </div>
 </template>
 <style>

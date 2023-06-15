@@ -3,91 +3,96 @@ const createShow = ref("create");
 </script>
 <template>
   <div>
-    <div class="container">
-      <StatCabinet />
-      <div class="columns">
-        <div class="column is-one-quarter">
-          <NavCabinet />
-        </div>
-        <div class="column is-three-quarters">
-          <div class="columns">
-            <Transition appear name="slide-up">
-              <div v-if="createShow === 'create'" class="c-absol">
-                <div class="column">
-                  <div class="creat-block" @click="createShow = 'createHand'">
-                    <icon name="gridicons:create" />
-                    <span>Собрать в ручную</span>
+    <ClientOnly>
+      <div class="container">
+        <StatCabinet />
+        <div class="columns">
+          <div class="column is-one-quarter">
+            <NavCabinet />
+          </div>
+          <div class="column is-three-quarters">
+            <div class="columns">
+              <Transition appear name="slide-up">
+                <div v-if="createShow === 'create'" class="c-absol">
+                  <div class="column">
+                    <div class="creat-block" @click="createShow = 'createHand'">
+                      <icon name="gridicons:create" />
+                      <span>Собрать в ручную</span>
+                    </div>
+                  </div>
+                  <div class="column">
+                    <div class="creat-block" @click="createShow = 'createFile'">
+                      <icon name="bi:filetype-xls" />
+                      <span>Выгрузить из xls</span>
+                    </div>
+                  </div>
+                  <div class="column">
+                    <div
+                      class="creat-block"
+                      @click="createShow = 'createGoogle'"
+                    >
+                      <icon name="uiw:file-excel" />
+                      <span>Получить из Google Exel</span>
+                    </div>
                   </div>
                 </div>
-                <div class="column">
-                  <div class="creat-block" @click="createShow = 'createFile'">
-                    <icon name="bi:filetype-xls" />
-                    <span>Выгрузить из xls</span>
-                  </div>
+                <div class="c-absol" v-else-if="createShow === 'createHand'">
+                  <CreateHand>
+                    <template v-slot:link-back>
+                      <button
+                        class="button is-small is-light mr-3"
+                        @click="createShow = 'create'"
+                      >
+                        <span class="icon">
+                          <icon
+                            name="material-symbols:keyboard-backspace-rounded"
+                          />
+                        </span>
+                        <span>назад</span>
+                      </button>
+                    </template>
+                  </CreateHand>
                 </div>
-                <div class="column">
-                  <div class="creat-block" @click="createShow = 'createGoogle'">
-                    <icon name="uiw:file-excel" />
-                    <span>Получить из Google Exel</span>
-                  </div>
+                <div class="c-absol" v-else-if="createShow === 'createFile'">
+                  <CreateFile>
+                    <template v-slot:link-back>
+                      <button
+                        class="button is-small is-light"
+                        @click="createShow = 'create'"
+                      >
+                        <span class="icon">
+                          <icon
+                            name="material-symbols:keyboard-backspace-rounded"
+                          />
+                        </span>
+                        <span>назад</span>
+                      </button>
+                    </template>
+                  </CreateFile>
                 </div>
-              </div>
-              <div class="c-absol" v-else-if="createShow === 'createHand'">
-                <CreateHand>
-                  <template v-slot:link-back>
-                    <button
-                      class="button is-small is-light mr-3"
-                      @click="createShow = 'create'"
-                    >
-                      <span class="icon">
-                        <icon
-                          name="material-symbols:keyboard-backspace-rounded"
-                        />
-                      </span>
-                      <span>назад</span>
-                    </button>
-                  </template>
-                </CreateHand>
-              </div>
-              <div class="c-absol" v-else-if="createShow === 'createFile'">
-                <CreateFile>
-                  <template v-slot:link-back>
-                    <button
-                      class="button is-small is-light"
-                      @click="createShow = 'create'"
-                    >
-                      <span class="icon">
-                        <icon
-                          name="material-symbols:keyboard-backspace-rounded"
-                        />
-                      </span>
-                      <span>назад</span>
-                    </button>
-                  </template>
-                </CreateFile>
-              </div>
-              <div class="c-absol" v-else-if="createShow === 'createGoogle'">
-                <CreateGoogle>
-                  <template v-slot:link-back>
-                    <button
-                      class="button is-small is-light"
-                      @click="createShow = 'create'"
-                    >
-                      <span class="icon">
-                        <icon
-                          name="material-symbols:keyboard-backspace-rounded"
-                        />
-                      </span>
-                      <span>назад</span>
-                    </button>
-                  </template>
-                </CreateGoogle>
-              </div>
-            </Transition>
+                <div class="c-absol" v-else-if="createShow === 'createGoogle'">
+                  <CreateGoogle>
+                    <template v-slot:link-back>
+                      <button
+                        class="button is-small is-light"
+                        @click="createShow = 'create'"
+                      >
+                        <span class="icon">
+                          <icon
+                            name="material-symbols:keyboard-backspace-rounded"
+                          />
+                        </span>
+                        <span>назад</span>
+                      </button>
+                    </template>
+                  </CreateGoogle>
+                </div>
+              </Transition>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </ClientOnly>
   </div>
 </template>
 
