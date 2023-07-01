@@ -5,6 +5,7 @@ export default defineNuxtConfig({
   },
   modules: [
     "@element-plus/nuxt",
+    "@nuxt/image",
     "nuxt-icon",
     [
       "@nuxtjs/google-fonts",
@@ -17,10 +18,12 @@ export default defineNuxtConfig({
       },
     ],
   ],
-  elementPlus: {},
+  elementPlus: {
+    importStyle: "css",
+  },
   devtools: { enabled: true },
   css: ["@/node_modules/bulma/css/bulma.css", "@/assets/main.css"],
-  plugins: [{ src: "~/plugins/auth.js" }],
+  vite: {},
   runtimeConfig: {
     public: {
       baseURL: "https://new.arhiterm.by/",

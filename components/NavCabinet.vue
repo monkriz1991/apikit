@@ -19,7 +19,7 @@ const handleClose = (key: string, keyPath: string[]) => {};
       <el-menu-item index="1">
         <nuxt-link to="/cabinet/">
           <el-icon><document /></el-icon>
-          <span>Мои Api</span>
+          <span>Мои Проекты</span>
         </nuxt-link>
       </el-menu-item>
       <el-menu-item index="2">

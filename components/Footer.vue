@@ -2,7 +2,7 @@
   <div>
     <footer class="footer">
       <div class="content has-text-centered">
-        <p><strong>ApiPull</strong></p>
+        <!-- <p><strong>UpApi</strong></p> -->
       </div>
     </footer>
   </div>
