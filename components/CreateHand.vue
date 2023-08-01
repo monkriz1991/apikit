@@ -2,9 +2,12 @@
 import InputHand from "./cabinet/InputHand.vue";
 const cod = shallowRef(InputHand);
 const dynamicFormPre = ref({});
-const nameObject = ref("");
+const nameObject = ref("nameApi");
+const nameObjectFun = ref({ nameApi: {} });
 const dynamicLevelSelect = ref({});
 const dynamicLevelName = ref("");
+const hidennameObject = ref(false);
+const refInput = ref("");
 
 const editableTabsValue = ref("1");
 const editableTabs = ref([
@@ -61,9 +64,19 @@ function selectLevelTwo(item, name) {
   dynamicLevelSelect.value = item;
   dynamicLevelName.value = name;
 }
+const shownameObject = () => {
+  hidennameObject.value = true;
+  nextTick(() => {
+    refInput.value.focus();
+  });
+};
+const toggleInput = (el) => {
+  hidennameObject.value = false;
+};
 async function sendObject(item) {
   // let res = await $auth.login({ item });
 }
+counterForm(nameObjectFun, nameObject.value);
 </script>
 <template>
   <div>
@@ -73,17 +86,29 @@ async function sendObject(item) {
       </div>
       <div class="columns mb-5">
         <div class="column is-three-fifths">
-          <el-form-item label="Имя объекта">
+          <el-form-item>
             <el-input
               v-model="nameObject"
+              v-show="hidennameObject"
+              @blur="toggleInput($event)"
+              ref="refInput"
               size="large"
-              placeholder="Введите название"
-              clearable
+              placeholder="Имя объекта"
             />
+            <div class="name-cr-project" v-show="hidennameObject == false">
+              <strong>Имя объекта</strong>
+              <span>{{ nameObject }}</span>
+              <button class="button is-white" @click="shownameObject">
+                <icon name="material-symbols:edit-outline-rounded" />
+              </button>
+            </div>
           </el-form-item>
-        </div>
-        <div class="column is-three-fifths">
-          <el-select v-model="project" placeholder="Проект" size="large">
+          <el-select
+            v-model="project"
+            placeholder="Проект"
+            size="large"
+            class="select-api-path"
+          >
             <el-option
               v-for="item in projectArray"
               :key="item.value"
@@ -91,40 +116,19 @@ async function sendObject(item) {
               :value="item.value"
             />
           </el-select>
+          <div class="path-cr-project">
+            <strong>Путь api</strong>
+            <span> {{ project }} / {{ nameObject }}</span>
+          </div>
         </div>
       </div>
       <div class="columns">
         <div class="column is-three-fifths">
-          <el-tabs
-            v-model="editableTabsValue"
-            type="card"
-            class="demo-tabs"
-            closable
-            @tab-remove="removeTab"
-          >
-            <el-tab-pane
-              v-for="item in editableTabs"
-              :key="item.name"
-              :label="item.title"
-              :name="item.name"
-            >
-              <div class="cr-hand-block">
-                <component
-                  :is="item.content"
-                  v-model:nameObject="nameObject"
-                  v-model:lavelValue="editableTabsValue"
-                  v-model:dynamicLevelSelect="dynamicLevelSelect"
-                  v-model:dynamicLevelName="dynamicLevelName"
-                  v-model:dynamicLevelObject="dynamicFormPre"
-                  @dynamicFormChange="counterForm"
-                  @dynamicSelect="selectLevelTwo"
-                ></component>
-              </div>
-            </el-tab-pane>
+          <div class="tab-level">
             <client-only>
               <button
                 v-if="editableTabs.length < 2"
-                class="button is-outlined ml-5"
+                class="button is-info is-light ml-6 add-level-hand"
                 @click="addTab(editableTabsValue)"
               >
                 <span class="icon">
@@ -133,19 +137,51 @@ async function sendObject(item) {
                 <span>Уровень</span>
               </button>
             </client-only>
-          </el-tabs>
+            <el-tabs
+              v-model="editableTabsValue"
+              type="card"
+              class="demo-tabs"
+              closable
+              @tab-remove="removeTab"
+            >
+              <el-tab-pane
+                v-for="item in editableTabs"
+                :key="item.name"
+                :label="item.title"
+                :name="item.name"
+              >
+                <div class="cr-hand-block">
+                  <component
+                    :is="item.content"
+                    v-model:nameObject="nameObject"
+                    v-model:lavelValue="editableTabsValue"
+                    v-model:dynamicLevelSelect="dynamicLevelSelect"
+                    v-model:dynamicLevelName="dynamicLevelName"
+                    v-model:dynamicLevelObject="dynamicFormPre"
+                    @dynamicFormChange="counterForm"
+                    @dynamicSelect="selectLevelTwo"
+                  ></component>
+                </div>
+              </el-tab-pane>
+            </el-tabs>
+          </div>
         </div>
         <div class="column is-two-fifths">
           <div class="cr-hand-cod mt-5">
             <div>
-              <pre>{{ dynamicFormPre }}</pre>
+              <pre v-highlightjs>
+                <code class="javascript">{{ dynamicFormPre }}</code>
+              </pre>
             </div>
           </div>
         </div>
       </div>
-      <div class="buttons">
-        <button class="button is-primary" @click="sendObject(dynamicFormPre)">
-          Сохранить
+      <div class="buttons butt-save-cr">
+        <button
+          class="button is-success is-light"
+          @click="sendObject(dynamicFormPre)"
+        >
+          Продолжить
         </button>
       </div>
     </div>
@@ -153,7 +189,8 @@ async function sendObject(item) {
 </template>
 <style>
 .cr-hand-block .button {
-  float: left;
+  /* float: left; */
+  border-radius: 7px;
 }
 .cr-hand-block .columns {
   margin-bottom: 0;
@@ -178,7 +215,8 @@ async function sendObject(item) {
   display: block;
 }
 .cr-hand-block .el-input__wrapper {
-  padding: 5px 11px;
+  padding: 2px 11px;
+  border-radius: 7px;
 }
 .el-form-item {
   display: flex;
@@ -202,5 +240,87 @@ async function sendObject(item) {
   line-height: 40px;
   position: relative;
   min-width: 0;
+}
+.name-cr-project {
+  width: 100%;
+}
+.name-cr-project > strong,
+.path-cr-project > strong {
+  width: 100%;
+  margin: 0 0 5px;
+  font-weight: 300;
+  font-size: 14px;
+  float: left;
+  height: auto;
+  line-height: 1;
+}
+.path-cr-project > span {
+  width: 100%;
+  float: left;
+  margin: 5px 0 0 0;
+}
+.name-cr-project > span {
+  font-size: 21px;
+}
+.name-cr-project button {
+  float: right;
+  font-size: 18px;
+  opacity: 0.5;
+}
+.name-cr-project button:hover {
+  background: transparent !important;
+  opacity: 0.8;
+  transition: 0.2s;
+}
+.path-cr-project {
+}
+.tab-level {
+  position: relative;
+}
+.add-level-hand {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  z-index: 12;
+  border-radius: 6px;
+  padding: 6px 18px;
+  height: auto;
+  font-size: 15px;
+}
+.tab-level .el-tabs--card > .el-tabs__header {
+  border: none;
+  margin: 0 0 0px;
+}
+.tab-level .el-tabs__nav-wrap {
+  margin-bottom: 0px;
+}
+.tab-level .el-tabs--card > .el-tabs__header .el-tabs__nav {
+  border: none;
+}
+.tab-level .el-tabs__item {
+  border: 1px solid #e2e2e2 !important;
+  border-radius: 7px;
+  font-weight: 400;
+  margin: 0px 5px 0 0;
+}
+pre {
+  background-color: transparent;
+}
+.select-api-path {
+  margin: 0px 0 30px;
+  width: 100%;
+}
+.select-api-path .el-input__wrapper {
+  border-radius: 10px;
+  height: 45px;
+}
+.butt-save-cr {
+  margin: 30px 13px 0px 0px;
+}
+.butt-save-cr button {
+  width: 60%;
+  border-radius: 11px;
+  padding: 23px 0;
+  /* background: #48c78e !important; */
 }
 </style>

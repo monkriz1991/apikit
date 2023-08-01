@@ -1,7 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   experimental: {
-    // viewTransition: true,
+    viewTransition: true,
   },
   modules: [
     "@element-plus/nuxt",
@@ -11,7 +11,7 @@ export default defineNuxtConfig({
       "@nuxtjs/google-fonts",
       {
         families: {
-          Montserrat: [100, 300, 400, 500, 600, 700, 800],
+          Rubik: [100, 300, 400, 500, 600, 700, 800],
           download: true,
           inject: true,
         },

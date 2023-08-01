@@ -13,10 +13,10 @@ const addProject = (item) => {
   <div>
     <section class="hero">
       <div class="hero-body">
-        <p class="title">Statistic</p>
+        <!-- <p class="title">Statistic</p> -->
         <p class="subtitle">Primary subtitle</p>
         <div class="cab-project-butt">
-          <button class="button is-success is-light" @click="addProject">
+          <button class="button is-success is-outlined" @click="addProject">
             <span class="icon">
               <icon name="material-symbols:add-to-photos-outline-rounded" />
             </span>

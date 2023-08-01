@@ -1,5 +1,6 @@
 <script setup lang="ts">
 const createShow = ref("create");
+const apiArr = ref(["catalogCompany", "AboutCompany", "my_product"]);
 </script>
 <template>
   <div>
@@ -13,30 +14,51 @@ const createShow = ref("create");
           <div class="column is-three-quarters">
             <div class="cab-project">
               <Transition appear name="fade" mode="out-in">
-                <div v-if="createShow === 'create'" class="c-absol">
+                <div v-if="createShow === 'create'">
                   <el-collapse accordion>
                     <el-collapse-item name="1">
-                      <template #title> Товары </template>
-                      <div>
-                        Consistent with real life: in line with the process and
-                        logic of real life, and comply with languages and habits
-                        that the users are used to;
-                      </div>
-                      <div>
-                        Consistent within interface: all elements should be
-                        consistent, such as: design style, icons and texts,
-                        position of elements, etc.
+                      <template #title
+                        >Товары
+                        <el-tag class="ml-2" type="info"
+                          >catalog</el-tag
+                        ></template
+                      >
+                      <div v-for="item in apiArr" :key="item">
+                        <div class="cab-project-api">
+                          <span class="name-api">{{ item }}</span>
+                          <el-tag
+                            class="ml-2"
+                            type="danger"
+                            effect="plain"
+                            size="small"
+                            >Записей: 125</el-tag
+                          >
+                          <div class="cab-api-button">
+                            <button class="button is-small">Изменить</button>
+                            <button class="button is-small">Удалить</button>
+                          </div>
+                        </div>
                       </div>
                     </el-collapse-item>
-                    <el-collapse-item title="Feedback" name="2">
+                    <el-collapse-item name="2">
+                      <template #title
+                        >Информация о копмании<el-tag class="ml-2" type="info"
+                          >AboutCompany</el-tag
+                        ></template
+                      >
                       <div>
-                        Operation feedback: enable the users to clearly perceive
-                        their operations by style updates and interactive
-                        effects;
-                      </div>
-                      <div>
-                        Visual feedback: reflect current state by updating or
-                        rearranging elements of the page.
+                        <div v-for="item in apiArr" :key="item">
+                          <div class="cab-project-api">
+                            <span>{{ item }}</span>
+                            <el-tag class="ml-2" type="danger" effect="plain"
+                              >Записей: 125</el-tag
+                            >
+                            <div class="cab-api-button">
+                              <button class="button is-small">Изменить</button>
+                              <button class="button is-small">Удалить</button>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </el-collapse-item>
                   </el-collapse>
@@ -68,5 +90,21 @@ const createShow = ref("create");
 .el-collapse {
   float: left;
   width: 100%;
+}
+.cab-project-api {
+  margin: 0 0 10px;
+  border-radius: 6px;
+  /* background: #f6f6f6; */
+  padding: 10px;
+}
+.cab-project-api > .name-api {
+  font-size: 15px;
+}
+.cab-api-button {
+  float: right;
+}
+.cab-api-button > button.button {
+  margin: 0 5px 0 0;
+  border-radius: 6px !important;
 }
 </style>

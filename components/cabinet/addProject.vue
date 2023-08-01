@@ -20,6 +20,7 @@ const dialogPjectadd = () => {
 };
 const formAccessibility = reactive({
   nameProject: "",
+  nameBase: "",
   descriptionProject: "",
 });
 </script>
@@ -34,32 +35,49 @@ const formAccessibility = reactive({
       <div class="content">
         <h4>Основная информация о проекте</h4>
 
-        <el-form label-position="left" label-width="150px">
-          <el-space fill>
+        <el-form label-position="left">
+          <el-space fill class="width-100">
             <el-alert type="info" show-icon :closable="false">
-              <p>"Пожалуйста, заполните название проекта:</p>
+              <p>"Задайте название проекта и базы данных:</p>
             </el-alert>
-            <el-form-item label="Название проекта">
+            <el-form-item class="mb-0">
               <el-input
                 v-model="formAccessibility.nameProject"
                 placeholder="Название проекта"
+                show-word-limit
+                maxlength="75"
+                size="large"
+              />
+            </el-form-item>
+            <el-alert
+              title="Допустимые имена"
+              type="warning"
+              description="Только на латинице, без пробелов, из разрешённых спецсимволов - ( _ ), можно использовать заглавные буквы и цифры: catalog, MyCompany, galery_product."
+              show-icon
+            />
+            <el-form-item>
+              <el-input
+                v-model="formAccessibility.nameBase"
+                placeholder="Имя базы данных"
+                show-word-limit
+                maxlength="50"
+                size="large"
               />
             </el-form-item>
           </el-space>
-          <el-space fill>
+          <el-space fill class="width-100">
             <el-alert type="info" show-icon :closable="false">
-              <p>"Напишите краткое описание.</p>
+              <p>"Дайте краткое описание Вашего проекта:</p>
             </el-alert>
-            <el-form-item label="Описание проекта">
-              <el-row :gutter="20">
-                <el-col :span="24">
-                  <el-input
-                    v-model="formAccessibility.descriptionProject"
-                    type="textarea"
-                    placeholder="Дайте краткое описание Вашему проекту"
-                  />
-                </el-col>
-              </el-row>
+            <el-form-item>
+              <el-input
+                v-model="formAccessibility.descriptionProject"
+                type="textarea"
+                placeholder="Краткое описание"
+                show-word-limit
+                maxlength="150"
+                :rows="3"
+              />
             </el-form-item>
           </el-space>
         </el-form>

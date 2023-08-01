@@ -1,5 +1,6 @@
 <script setup>
-import { Lock, User, Message } from "@element-plus/icons-vue";
+import { Lock, User } from "@element-plus/icons-vue";
+const { $auth } = useNuxtApp();
 const ruleFormRef = ref();
 
 const validatePass = (rule, value, callback) => {
@@ -26,7 +27,6 @@ const form = reactive({
   email: "",
   password: "",
   checkPass: "",
-  name: "",
 });
 
 const rules = reactive({
@@ -47,32 +47,32 @@ const onSubmit = (formEl) => {
 };
 </script>
 <template>
-  <div>
-    <div class="container">
-      <StatCabinet />
-      <div class="columns">
-        <div class="column is-one-quarter">
-          <NavCabinet />
+  <div class="container">
+    <div class="columns">
+      <div class="column is-3">
+        <div class="login-prev">
+          <nuxt-img src="/3456426.webp" />
         </div>
-        <div class="column is-three-quarters">
-          <div class="setting-cab">
+      </div>
+      <div class="column is-9">
+        <div class="content">
+          <div class="login-form">
+            <h1>Регистрация</h1>
+            <p class="fz-14">
+              Уже есть аккаунт:
+              <nuxt-link to="/login" class="a-login-info"
+                >Войти
+                <span class="icon">
+                  <icon name="solar:map-arrow-right-bold-duotone" /> </span
+              ></nuxt-link>
+            </p>
             <el-form
               :model="form"
               @submit.prevent
               ref="ruleFormRef"
               :rules="rules"
+              class="demo-form-inline"
             >
-              <el-form-item>
-                <el-input
-                  v-model="form.name"
-                  size="large"
-                  class="mb-2"
-                  placeholder="Введите ИФО"
-                  :prefix-icon="User"
-                  clearable
-                />
-              </el-form-item>
-
               <el-form-item
                 :rules="[
                   {
@@ -92,7 +92,7 @@ const onSubmit = (formEl) => {
                   size="large"
                   class="mb-2"
                   placeholder="Введите email"
-                  :prefix-icon="Message"
+                  :prefix-icon="User"
                   clearable
                 />
               </el-form-item>
@@ -120,8 +120,11 @@ const onSubmit = (formEl) => {
                   show-password
                 />
               </el-form-item>
-              <button class="button mt-3" @click="onSubmit(ruleFormRef)">
-                Сохранить изменения
+              <button
+                class="button is-danger b-log mt-3"
+                @click="onSubmit(ruleFormRef)"
+              >
+                Создать аккаунт
               </button>
             </el-form>
           </div>
@@ -130,12 +133,3 @@ const onSubmit = (formEl) => {
     </div>
   </div>
 </template>
-
-<style>
-.setting-cab .el-input--large .el-input__inner {
-  --el-input-inner-height: calc(var(--el-input-height, 46px) - -6px);
-  font-size: 15px;
-  line-height: 1;
-  font-weight: 300;
-}
-</style>

@@ -89,6 +89,9 @@ watch(pushObject, (input) => {
   emit("dynamicFormChange", input.objectItem, objectItem.value);
 });
 watch(dynamicForm.input, (input) => {
+  if (props.nameObject) {
+    objectItem.value = props.nameObject;
+  }
   if (props.lavelValue == 1) {
     pushObject.objectItem[objectItem.value] = {};
     levelOneObject.select = [];
@@ -105,7 +108,9 @@ watch(dynamicForm.input, (input) => {
           input[item].type;
       }
     }
+
     objectCache.cache = pushObject.objectItem[objectItem.value];
+
     emit("dynamicSelect", levelOneObject, objectItem.value);
   }
   if (props.lavelValue == 2) {
@@ -141,10 +146,19 @@ const levelItem = (item) => {
       :key="index"
     >
       <div class="control column is-6">
-        <el-input v-model="input.value" placeholder="Введите ключ" />
+        <el-input
+          v-model="input.value"
+          size="large"
+          placeholder="Введите ключ"
+        />
       </div>
-      <div v-if="lavelValue == 1" class="column is-4">
-        <el-select v-model="input.type" clearable placeholder="Тип данных">
+      <div v-if="lavelValue == 1" class="column is-narrow">
+        <el-select
+          v-model="input.type"
+          clearable
+          placeholder="Тип данных"
+          size="large"
+        >
           <el-option
             v-for="item in options"
             :key="item.value"
@@ -160,6 +174,7 @@ const levelItem = (item) => {
           @change="levelItem"
           clearable
           placeholder="Объект"
+          size="large"
         >
           <el-option
             v-for="item in dynamicLevelSelect.select"
@@ -169,7 +184,7 @@ const levelItem = (item) => {
           />
         </el-select>
       </div>
-      <div class="column is-2 has-text-right">
+      <div class="column has-text-right">
         <button class="button" @click="removeInput(input)">
           <span class="icon is-large">
             <icon name="line-md:remove" />
@@ -186,3 +201,21 @@ const levelItem = (item) => {
     </div>
   </div>
 </template>
+
+<style>
+.cr-hand #tab-1 > .el-icon {
+  display: none;
+}
+.cr-hand #tab-1:hover {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+.has-text-right button {
+  float: right;
+  right: 1px;
+}
+.has-text-right button svg {
+  height: 1.3em !important;
+  opacity: 0.6;
+}
+</style>

@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { UserFilled } from "@element-plus/icons-vue";
 const createShow = ref("create");
 </script>
 <template>
@@ -14,70 +15,77 @@ const createShow = ref("create");
             <Transition appear name="fade" mode="out-in">
               <div v-if="createShow === 'create'" class="columns">
                 <div class="column">
-                  <div class="creat-block" @click="createShow = 'createHand'">
-                    <icon name="gridicons:create" />
+                  <button
+                    class="creat-block"
+                    @click="createShow = 'createHand'"
+                  >
+                    <icon name="material-symbols:touch-app-outline-rounded" />
                     <span>Собрать в ручную</span>
-                  </div>
+                  </button>
                 </div>
                 <div class="column">
-                  <div class="creat-block" @click="createShow = 'createFile'">
+                  <button
+                    class="creat-block"
+                    @click="createShow = 'createFile'"
+                    disabled
+                  >
                     <icon name="bi:filetype-xls" />
                     <span>Выгрузить из xls</span>
-                  </div>
+                  </button>
                 </div>
                 <div class="column">
-                  <div class="creat-block" @click="createShow = 'createGoogle'">
+                  <button
+                    class="creat-block"
+                    @click="createShow = 'createGoogle'"
+                    disabled
+                  >
                     <icon name="uiw:file-excel" />
                     <span>Получить из Google Exel</span>
-                  </div>
+                  </button>
                 </div>
               </div>
               <div v-else-if="createShow === 'createHand'">
                 <CreateHand>
                   <template v-slot:link-back>
-                    <button
-                      class="button is-light mr-3"
-                      @click="createShow = 'create'"
-                    >
-                      <span class="icon is-small">
-                        <icon name="ion:arrow-back-outline" />
-                      </span>
-                      <span>назад</span>
-                    </button>
+                    <el-page-header @back="createShow = 'create'" title="Назад">
+                      <template #content>
+                        <div class="flex items-center">
+                          <span class="text-sm mr-3">
+                            Создание api в ручную
+                          </span>
+                        </div>
+                      </template>
+                    </el-page-header>
                   </template>
                 </CreateHand>
               </div>
               <div v-else-if="createShow === 'createFile'">
                 <CreateFile>
                   <template v-slot:link-back>
-                    <button
-                      class="button is-small is-light"
-                      @click="createShow = 'create'"
-                    >
-                      <span class="icon">
-                        <icon
-                          name="material-symbols:keyboard-backspace-rounded"
-                        />
-                      </span>
-                      <span>назад</span>
-                    </button>
+                    <el-page-header @back="createShow = 'create'" title="Назад">
+                      <template #content>
+                        <div class="flex items-center">
+                          <span class="text-sm mr-3">
+                            Создание api через файл Xls
+                          </span>
+                        </div>
+                      </template>
+                    </el-page-header>
                   </template>
                 </CreateFile>
               </div>
-              <div class="c-absol" v-else-if="createShow === 'createGoogle'">
+              <div v-else-if="createShow === 'createGoogle'">
                 <CreateGoogle>
                   <template v-slot:link-back>
-                    <button
-                      class="button is-small is-light"
-                      @click="createShow = 'create'"
-                    >
-                      <span class="icon">
-                        <icon
-                          name="material-symbols:keyboard-backspace-rounded"
-                        />
-                      </span>
-                      <span>назад</span>
-                    </button>
+                    <el-page-header @back="createShow = 'create'" title="Назад">
+                      <template #content>
+                        <div class="flex items-center">
+                          <span class="text-sm mr-3">
+                            Создание api через таблицу Gogle exel
+                          </span>
+                        </div>
+                      </template>
+                    </el-page-header>
                   </template>
                 </CreateGoogle>
               </div>
@@ -101,27 +109,31 @@ const createShow = ref("create");
 .creat-block {
   padding: 40px;
   display: block;
-  text-align: center;
+  text-align: left;
+  width: 100%;
   border-radius: 15px;
-  background: #f8f8f8;
+  background: transparent;
   cursor: pointer;
+  border: 2px solid #e5e7eb;
 }
 .creat-block .icon {
-  width: 100%;
   display: block;
-  height: 35px;
+  height: 40px;
+  width: 40px;
   opacity: 0.7;
 }
 .creat-block span {
   width: 100%;
   display: block;
   padding: 20px 0;
-  font-size: 16px;
-  font-weight: 500;
+  font-size: 17px;
+  font-weight: 700;
 }
 .creat-block:hover {
-  transition: 0.2s;
+  transition: 0.4s;
   color: #000;
-  background: #eeeeee;
+  /* background: #eeeeee; */
+  /* border-color: #00dc82; */
+  border-color: #787878;
 }
 </style>
