@@ -4,6 +4,8 @@ export default defineNuxtConfig({
     viewTransition: true,
   },
   modules: [
+    "@pinia/nuxt",
+    "@pinia-plugin-persistedstate/nuxt",
     "@element-plus/nuxt",
     "@nuxt/image",
     "nuxt-icon",

@@ -1,19 +1,23 @@
 <script setup>
 import { Unlock, User } from "@element-plus/icons-vue";
-const { $auth } = useNuxtApp();
+import { storeToRefs } from "pinia";
+import { useAuthStore } from "/store/auth";
+
+const { authenticateUser } = useAuthStore();
+const { authenticated } = storeToRefs(useAuthStore());
+
 const form = reactive({
-  email: "",
+  username: "",
   password: "",
 });
 
-async function onSubmit() {
-  let res = await $auth.login({ name: form.email, password: form.password });
-  console.log(res);
-  // if (res) {
-  //   navigateTo("/cabinet/");
-  // }
-  // navigateTo("/cabinet/");
-}
+const login = async () => {
+  await authenticateUser({ username: form.username, password: form.password });
+  console.log(authenticated.value);
+  if (authenticated.value == true) {
+    navigateTo("/cabinet/");
+  }
+};
 </script>
 <template>
   <div class="container">
@@ -38,7 +42,7 @@ async function onSubmit() {
             <el-form :model="form" @submit.prevent class="demo-form-inline">
               <el-form-item>
                 <el-input
-                  v-model="form.email"
+                  v-model="form.username"
                   size="large"
                   class="mb-2"
                   placeholder="Введите email"
@@ -59,7 +63,7 @@ async function onSubmit() {
               <p class="mb-5">
                 <nuxt-link to="/password-reset">Забыли пароль?</nuxt-link>
               </p>
-              <button class="button is-danger b-log mt-1" @click="onSubmit">
+              <button class="button is-danger b-log mt-1" @click="login">
                 Войти
               </button>
             </el-form>

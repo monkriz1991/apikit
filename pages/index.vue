@@ -1,9 +1,19 @@
 <script setup>
+import { storeToRefs } from "pinia";
+import { useCounterStore } from "@/store/counter";
+
 const comment = ref("// UpApi - универсальный конструктор Api");
+const store = useCounterStore();
+const { increment } = store;
+const count = computed(() => store.count);
+
+const { getCount } = storeToRefs(store);
 </script>
 <template>
   <div class="container">
     <kinesis-container class="container-kinesis">
+      <!-- <button type="button" @click="increment"></button>
+      <p>Counter: {{ store.getCount }}</p> -->
       <kinesis-element
         tag="div"
         class="circle circle-blue"

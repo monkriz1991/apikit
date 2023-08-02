@@ -1,3 +1,19 @@
+<script setup>
+import { storeToRefs } from "pinia";
+import { useAuthStore } from "/store/auth";
+
+const router = useRouter();
+
+const { logUserOut } = useAuthStore();
+const { authenticated } = storeToRefs(useAuthStore());
+
+const authStore = useAuthStore();
+
+const logout = () => {
+  logUserOut();
+  router.push("/");
+};
+</script>
 <template>
   <div class="container">
     <div class="bd-snippet-preview">
@@ -11,7 +27,7 @@
           >
         </div>
         <div class="level-right">
-          <nuxt-link to="/login" class="mr-3">
+          <nuxt-link v-if="!authenticated" to="/login" class="mr-3">
             <button class="button is-success is-outlined bt-c-suss-line">
               <span class="icon">
                 <icon name="solar:login-3-broken" />
@@ -19,7 +35,7 @@
               <span>Вход</span>
             </button>
           </nuxt-link>
-          <nuxt-link to="/registration">
+          <nuxt-link v-if="!authenticated" to="/registration">
             <button class="button is-success bt-c-suss">
               <span class="icon">
                 <icon name="solar:user-circle-broken" />
@@ -27,17 +43,21 @@
               <span>Регистрация</span>
             </button>
           </nuxt-link>
-          <!-- <button
-            v-if="!$auth.user?.value?.email"
-            class="button is-primary"
-            @click="openLoginForm"
+          <nuxt-link v-if="authenticated" to="/cabinet" class="mr-3">
+            <button class="button is-success is-outlined bt-c-suss-line">
+              <span class="icon">
+                <icon name="emojione-monotone:file-cabinet" />
+              </span>
+              <span>Кабинет</span>
+            </button>
+          </nuxt-link>
+          <button
+            v-if="authenticated"
+            class="button is-success bt-c-suss"
+            @click="logout"
           >
-            Login
+            Выйти
           </button>
-          <div v-if="$auth.user?.value?.email">
-            {{ $auth.user.value?.email }} <br />
-            <button @click="$auth.logout()">выйти</button>
-          </div> -->
         </div>
       </nav>
     </div>

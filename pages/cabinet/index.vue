@@ -1,4 +1,7 @@
-<script setup lang="ts">
+<script setup>
+import { storeToRefs } from "pinia";
+import { useAuthStore } from "/store/auth";
+
 const createShow = ref("create");
 const apiArr = ref(["catalogCompany", "AboutCompany", "my_product"]);
 </script>
