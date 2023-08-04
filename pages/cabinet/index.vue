@@ -4,6 +4,15 @@ import { useAuthStore } from "/store/auth";
 
 const createShow = ref("create");
 const apiArr = ref(["catalogCompany", "AboutCompany", "my_product"]);
+const allProject = ref(0);
+const visibleModal = ref(false);
+const addProject = (item) => {
+  if (item.value == undefined) {
+    visibleModal.value = !visibleModal.value;
+  } else {
+    visibleModal.value = item.value;
+  }
+};
 </script>
 <template>
   <div>
@@ -65,13 +74,40 @@ const apiArr = ref(["catalogCompany", "AboutCompany", "my_product"]);
                       </div>
                     </el-collapse-item>
                   </el-collapse>
+                  <div class="cab-project-butt">
+                    <button
+                      class="button is-success is-outlined"
+                      @click="addProject"
+                    >
+                      <span class="icon">
+                        <icon name="fluent:add-square-multiple-20-filled" />
+                      </span>
+                      <span>Создать проект</span>
+                    </button>
+                  </div>
                 </div>
-                <div v-else-if="createShow === 'nocreate'">ok</div>
+                <div v-else-if="createShow === 'nocreate'">
+                  <div class="cab-project-butt">
+                    <button
+                      class="button is-success is-outlined"
+                      @click="addProject"
+                    >
+                      <span class="icon">
+                        <icon name="fluent:add-square-multiple-20-filled" />
+                      </span>
+                      <span>Создать проект</span>
+                    </button>
+                  </div>
+                </div>
               </Transition>
             </div>
           </div>
         </div>
       </div>
+      <cabinet-addProject
+        :modalAddProject="visibleModal"
+        @emitVisibleModal="addProject"
+      />
     </ClientOnly>
   </div>
 </template>

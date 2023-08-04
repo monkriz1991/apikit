@@ -107,3 +107,11 @@ footer {
 .dialog-new .el-alert--info.is-light .el-alert__description {
   font-size: 14px;
 }
+.cab-project-butt {
+  float: left;
+  margin: 40px 0;
+}
+.cab-project-butt button {
+  padding: 26px;
+  border-radius: 10px;
+}

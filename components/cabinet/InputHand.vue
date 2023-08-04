@@ -55,7 +55,6 @@ const pushObject = reactive({ objectItem: {} });
 const dynamicForm = reactive({
   input: [
     {
-      name: "",
       type: "",
       parent: "",
     },
@@ -64,7 +63,6 @@ const dynamicForm = reactive({
 
 const addInput = () => {
   dynamicForm.input.push({
-    name: "",
     type: "",
     parent: "",
   });

@@ -214,7 +214,8 @@ counterForm(nameObjectFun, nameObject.value);
 .cr-hand-block .el-select {
   display: block;
 }
-.cr-hand-block .el-input__wrapper {
+.cr-hand-block .el-input__wrapper,
+.asterisk-left .el-input__wrapper {
   padding: 2px 11px;
   border-radius: 7px;
 }
@@ -264,12 +265,16 @@ counterForm(nameObjectFun, nameObject.value);
 }
 .name-cr-project button {
   float: right;
-  font-size: 18px;
-  opacity: 0.5;
+  font-size: 21px;
+  opacity: 0.7;
+  color: #296fa8 !important;
+  top: -2px;
+  padding-top: 10px;
+  height: 43px;
 }
 .name-cr-project button:hover {
   background: transparent !important;
-  opacity: 0.8;
+  opacity: 1;
   transition: 0.2s;
 }
 .path-cr-project {

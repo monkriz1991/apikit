@@ -7,8 +7,6 @@ const router = useRouter();
 const { logUserOut } = useAuthStore();
 const { authenticated } = storeToRefs(useAuthStore());
 
-const authStore = useAuthStore();
-
 const logout = () => {
   logUserOut();
   router.push("/");

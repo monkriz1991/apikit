@@ -1,50 +1,8 @@
 <script setup>
-import { Lock, User, Message } from "@element-plus/icons-vue";
-const ruleFormRef = ref();
-
-const validatePass = (rule, value, callback) => {
-  if (value === "") {
-    callback(new Error("Пожалуйста введите пароль"));
-  } else {
-    if (form.checkPass !== "") {
-      if (!ruleFormRef.value) return;
-      ruleFormRef.value.validateField("checkPass", () => null);
-    }
-    callback();
-  }
-};
-const validatePass2 = (rule, value, callback) => {
-  if (value === "") {
-    callback(new Error("Пожалуйста введите пароль повторно"));
-  } else if (value !== form.password) {
-    callback(new Error("Пароли не совпадают!"));
-  } else {
-    callback();
-  }
-};
-const form = reactive({
-  email: "",
-  password: "",
-  checkPass: "",
-  name: "",
-});
-
-const rules = reactive({
-  password: [{ validator: validatePass, trigger: "blur", trigger: "change" }],
-  checkPass: [{ validator: validatePass2, trigger: "blur", trigger: "change" }],
-});
-
-const onSubmit = (formEl) => {
-  if (!formEl) return;
-  formEl.validate((valid) => {
-    if (valid) {
-      console.log("submit!");
-    } else {
-      console.log("error submit!");
-      return false;
-    }
-  });
-};
+import { storeToRefs } from "pinia";
+import { useAuthStore } from "/store/auth";
+import { UserFilled } from "@element-plus/icons-vue";
+const { user } = storeToRefs(useAuthStore());
 </script>
 <template>
   <div>
@@ -56,74 +14,15 @@ const onSubmit = (formEl) => {
         </div>
         <div class="column is-three-quarters">
           <div class="setting-cab">
-            <el-form
-              :model="form"
-              @submit.prevent
-              ref="ruleFormRef"
-              :rules="rules"
-            >
-              <el-form-item>
-                <el-input
-                  v-model="form.name"
-                  size="large"
-                  class="mb-2"
-                  placeholder="Введите ИФО"
-                  :prefix-icon="User"
-                  clearable
-                />
-              </el-form-item>
-
-              <el-form-item
-                :rules="[
-                  {
-                    required: true,
-                    message: 'Пожалуйста введите email',
-                  },
-                  {
-                    type: 'email',
-                    message: 'Пожалуйста введите корректный email ',
-                    trigger: ['blur', 'change'],
-                  },
-                ]"
-                prop="email"
-              >
-                <el-input
-                  v-model="form.email"
-                  size="large"
-                  class="mb-2"
-                  placeholder="Введите email"
-                  :prefix-icon="Message"
-                  clearable
-                />
-              </el-form-item>
-              <el-form-item prop="password">
-                <el-input
-                  v-model="form.password"
-                  size="large"
-                  type="password"
-                  class="mb-2"
-                  autocomplete="off"
-                  placeholder="Введите пароль"
-                  :prefix-icon="Lock"
-                  show-password
-                />
-              </el-form-item>
-              <el-form-item prop="checkPass">
-                <el-input
-                  v-model="form.checkPass"
-                  size="large"
-                  type="password"
-                  class="mb-2"
-                  autocomplete="off"
-                  placeholder="Введите пароль повторно"
-                  :prefix-icon="Lock"
-                  show-password
-                />
-              </el-form-item>
-              <button class="button mt-3" @click="onSubmit(ruleFormRef)">
-                Сохранить изменения
-              </button>
-            </el-form>
+            <h1>Приветствуем {{ user.first_name }}</h1>
+            <div class="setting-avatar">
+              <h2>Аватар профиля</h2>
+              <div>
+                <el-avatar :icon="UserFilled" />
+              </div>
+            </div>
+            <cabinet-generalInfo />
+            <cabinet-editPassword />
           </div>
         </div>
       </div>
@@ -137,5 +36,26 @@ const onSubmit = (formEl) => {
   font-size: 15px;
   line-height: 1;
   font-weight: 300;
+}
+.setting-cab h1 {
+  font-size: 31px;
+  font-weight: 700;
+  margin: 0 0 30px;
+}
+.setting-avatar {
+  margin: 0 0 30px;
+}
+.setting-avatar h2 {
+  font-size: 22px;
+  font-weight: 600;
+  margin: 0 0 30px;
+  color: #828282;
+}
+.setting-avatar .el-avatar {
+  height: 100px;
+  width: 100px;
+  font-size: 60px;
+  border-radius: 22px;
+  background: #a4a4a4;
 }
 </style>

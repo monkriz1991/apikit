@@ -17,7 +17,6 @@ export default defineNuxtRouteMiddleware((to, route) => {
   ) {
     return navigateTo("/cabinet/");
   }
-  console.log(to.name);
   if (
     (!token.value && to?.name === "cabinet") ||
     (!token.value && to?.name === "cabinet-fill-api") ||
