@@ -3,8 +3,25 @@ import { UserFilled } from "@element-plus/icons-vue";
 import { storeToRefs } from "pinia";
 import { useAuthStore } from "/store/auth";
 const { user } = storeToRefs(useAuthStore());
-const handleOpen = (key, keyPath) => {};
-const handleClose = (key, keyPath) => {};
+const route = useRoute();
+const menuActive = ref(["1"]);
+const menuOpen = ref("1");
+
+function openMeny(route) {
+  if (
+    route == "cabinet-fill-api" ||
+    route == "cabinet-fill-api-id" ||
+    route == "cabinet-card-id"
+  ) {
+    menuActive.value = ["3"];
+    menuOpen.value = "3-1";
+  }
+  if (route == "cabinet-card") {
+    menuActive.value = ["3"];
+    menuOpen.value = "3-2";
+  }
+}
+openMeny(route.name);
 </script>
 <template>
   <div>
@@ -17,7 +34,7 @@ const handleClose = (key, keyPath) => {};
       <div class="menu-cab-name">
         <h4>{{ user.first_name }}</h4>
       </div>
-      <el-menu>
+      <el-menu :default-openeds="menuActive" :default-active="menuOpen">
         <el-menu-item index="1">
           <nuxt-link to="/cabinet/">
             <span class="icon">
@@ -124,7 +141,7 @@ const handleClose = (key, keyPath) => {};
   box-shadow: 6px 0 0 0 rgb(152 212 174); */
 }
 .el-menu-cab > ul > li > a.router-link-active:after,
-.el-sub-menu a.router-link-active:after {
+.el-sub-menu .el-menu-item.is-active:after {
   content: "";
   width: 5px;
   position: absolute;
@@ -164,6 +181,8 @@ const handleClose = (key, keyPath) => {};
 }
 .el-menu-cab .el-sub-menu.is-opened {
   /* height: auto !important; */
+}
+.el-menu-cab .el-sub-menu .el-menu {
   padding: 0;
 }
 .el-menu-cab .el-sub-menu__title {
