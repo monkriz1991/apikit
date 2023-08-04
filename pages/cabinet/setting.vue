@@ -3,6 +3,7 @@ import { storeToRefs } from "pinia";
 import { useAuthStore } from "/store/auth";
 import { UserFilled } from "@element-plus/icons-vue";
 const { user } = storeToRefs(useAuthStore());
+const userMeny = ref(user.value);
 </script>
 <template>
   <div>
@@ -14,7 +15,7 @@ const { user } = storeToRefs(useAuthStore());
         </div>
         <div class="column is-three-quarters">
           <div class="setting-cab">
-            <h1>Приветствуем {{ user.first_name }}</h1>
+            <h1>Приветствуем {{ userMeny.first_name }}</h1>
             <div class="setting-avatar">
               <h2>Аватар профиля</h2>
               <div>

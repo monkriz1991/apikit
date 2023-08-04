@@ -28,10 +28,10 @@ export const useAuthStore = defineStore("auth", {
       }
     },
     logUserOut() {
-      this.user = null;
+      this.authenticated = false;
       const token = useCookie("token");
-      this.authenticated = false; // set authenticated  state value to false
-      token.value = null; // clear the token cookie
+      token.value = null;
+      this.user = null;
     },
   },
   persist: true,

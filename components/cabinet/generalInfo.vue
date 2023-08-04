@@ -3,6 +3,7 @@ import { User, Message } from "@element-plus/icons-vue";
 import { storeToRefs } from "pinia";
 import { useAuthStore } from "/store/auth";
 const { user } = storeToRefs(useAuthStore());
+const userMeny = ref(user.value);
 
 const ruleFormRef = ref();
 const showForm = ref(false);
@@ -39,11 +40,11 @@ const onSubmit = (formEl) => {
       <div class="g-info-prev" v-show="showForm == false">
         <p>
           <span>Имя</span>
-          <strong>{{ user.first_name }}</strong>
+          <strong>{{ userMeny.first_name }}</strong>
         </p>
         <p>
           <span>Email</span>
-          <strong>{{ user.email }}</strong>
+          <strong>{{ userMeny.email }}</strong>
         </p>
       </div>
       <el-form

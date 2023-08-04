@@ -3,6 +3,7 @@ import { UserFilled } from "@element-plus/icons-vue";
 import { storeToRefs } from "pinia";
 import { useAuthStore } from "/store/auth";
 const { user } = storeToRefs(useAuthStore());
+const userMeny = ref(user.value);
 const route = useRoute();
 const menuActive = ref(["1"]);
 const menuOpen = ref("1");
@@ -32,7 +33,7 @@ openMeny(route.name);
         </div>
       </div>
       <div class="menu-cab-name">
-        <h4>{{ user.first_name }}</h4>
+        <h4>{{ userMeny.first_name }}</h4>
       </div>
       <el-menu :default-openeds="menuActive" :default-active="menuOpen">
         <el-menu-item index="1">
