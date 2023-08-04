@@ -56,18 +56,20 @@ const { getCount } = storeToRefs(store);
             <div class="content ix-title">
               <h1 class="index-comment">{{ comment }}</h1>
               <p>
-                <strong>Создавайте модель</strong>
+                <strong>Создавайте Api коллекции</strong>
               </p>
-              <p>
+              <!-- <p>
                 <strong class="mgl-medium"
                   ><span><nuxt-img src="/2965327.webp" />GExel парсингом</span
                   ><span><nuxt-img src="/627558.webp" />Вручную</span
                   ><span><nuxt-img src="/excel.webp" />Из Xls</span></strong
                 >
-              </p>
-
+              </p> -->
               <p>
-                <strong>Встраивайте в проект</strong>
+                <strong>Интегрируйте с CRM</strong>
+              </p>
+              <p>
+                <strong>Встраивайте в проекты</strong>
               </p>
               <p>
                 <strong class="mgl-medium">
@@ -81,17 +83,15 @@ const { getCount } = storeToRefs(store);
                   ></strong
                 >
               </p>
-              <p>
-                <strong>Интегрируйте с</strong>
-              </p>
-              <p>
+
+              <!-- <p>
                 <strong class="mgl-medium"
                   ><span><nuxt-img src="/crm-icon-png-8.webp" />CRM</span
                   ><span
                     ><nuxt-img src="/1C_Company-Logo.wine.webp" />1c</span
                   ></strong
                 >
-              </p>
+              </p> -->
               <p class="index-prev">Первые 14 - дней бесплатно!</p>
               <p>
                 <nuxt-link to="/login">
@@ -384,19 +384,19 @@ const { getCount } = storeToRefs(store);
   margin: 0 5px 0 0;
   /* background: #893737; */
   border-radius: 8px;
-  font-size: 15px;
+  font-size: 21px;
   font-weight: 500;
-  padding: 9px 10px 9px 36px;
+  padding: 9px 10px 9px 45px;
   /* color: #ffffff; */
-  border: 2px solid #989898;
+  /* border: 2px solid #989898; */
   position: relative;
   display: inline-block;
   float: left;
 }
 .mgl-medium img,
 .mgl-medium .icon {
-  height: 20px;
-  margin: 0 5px 0 0;
+  height: 30px;
+  margin: 0 10px 0 0;
   position: absolute;
   top: 6px;
   left: 5px;
