@@ -4,6 +4,7 @@ import { useAuthStore } from "/store/auth";
 
 const createShow = ref("create");
 const apiArr = ref(["catalogCompany", "AboutCompany", "my_product"]);
+const { $openDell } = useNuxtApp();
 const allProject = ref(0);
 const visibleModal = ref(false);
 const addProject = (item) => {
@@ -45,9 +46,16 @@ const addProject = (item) => {
                             size="small"
                             >Записей: 125</el-tag
                           >
-                          <div class="cab-api-button">
-                            <button class="button is-small">Изменить</button>
-                            <button class="button is-small">Удалить</button>
+                          <div class="cab-api-button fill-api-button">
+                            <button class="button is-small button-edit">
+                              Изменить
+                            </button>
+                            <button
+                              class="button is-small button-dell"
+                              @click.prevent="$openDell"
+                            >
+                              Удалить
+                            </button>
                           </div>
                         </div>
                       </div>
@@ -65,9 +73,16 @@ const addProject = (item) => {
                             <el-tag class="ml-2" type="danger" effect="plain"
                               >Записей: 125</el-tag
                             >
-                            <div class="cab-api-button">
-                              <button class="button is-small">Изменить</button>
-                              <button class="button is-small">Удалить</button>
+                            <div class="cab-api-button fill-api-button">
+                              <button class="button is-small button-edit">
+                                Изменить
+                              </button>
+                              <button
+                                class="button is-small button-dell"
+                                @click.prevent="$openDell"
+                              >
+                                Удалить
+                              </button>
                             </div>
                           </div>
                         </div>

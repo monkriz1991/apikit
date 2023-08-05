@@ -49,7 +49,7 @@ openMeny(route.name);
             <span class="icon">
               <icon name="majesticons:applications-add" />
             </span>
-            <span>Добавить Api</span>
+            <span>Добавить коллекцию</span>
           </nuxt-link>
         </el-menu-item>
 
@@ -188,5 +188,11 @@ openMeny(route.name);
 }
 .el-menu-cab .el-sub-menu__title {
   padding: 0 !important;
+}
+.el-sub-menu li {
+  width: 100%;
+  padding: 0 !important;
+  height: auto !important;
+  line-height: 2.5 !important;
 }
 </style>

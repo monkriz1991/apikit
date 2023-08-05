@@ -1,5 +1,6 @@
 <script setup>
 const router = useRouter();
+const { $openDell } = useNuxtApp();
 const allRecords = ref([
   {
     id: 1,
@@ -36,7 +37,9 @@ const allRecords = ref([
       </div>
       <div class="column is-three-quarters">
         <el-page-header @click="router.back()" title="Назад">
-          <template #content>name tema</template>
+          <template #content>
+            <span class="text-sm mr-3">Товары компании</span></template
+          >
           <template #extra> </template>
         </el-page-header>
         <!-- <button class="button button-add-rec">
@@ -46,7 +49,24 @@ const allRecords = ref([
           <div v-for="item in allRecords" :key="item" class="fill-api">
             <nuxt-link :to="`/cabinet/card/` + item.id">
               <strong>{{ item.name }}</strong>
+              <div class="fill-api-button">
+                <!-- <button class="button is-small button-edit">Изменить</button> -->
+                <button
+                  class="button is-small button-dell"
+                  @click.prevent="$openDell"
+                >
+                  Удалить
+                </button>
+              </div>
             </nuxt-link>
+          </div>
+          <div class="fill-pagination">
+            <el-pagination
+              :page-size="14"
+              :pager-count="11"
+              layout="prev, pager, next"
+              :total="1000"
+            />
           </div>
         </div>
       </div>
@@ -55,6 +75,9 @@ const allRecords = ref([
 </template>
 
 <style>
+.number {
+  margin-right: 0px;
+}
 .fill-api-section {
   margin: 40px 0 0;
 }
@@ -78,5 +101,43 @@ const allRecords = ref([
 }
 .button-add-rec:hover a {
   color: #000;
+}
+.fill-api > a > strong {
+  float: left;
+  width: 60%;
+}
+.fill-api-button {
+  float: right;
+
+  text-align: right;
+}
+.fill-api-button button {
+  font-weight: 400;
+  transition: var(--el-transition-all);
+}
+.fill-api-button .button-edit {
+  margin: 0 10px 0 0;
+  background-color: #48c78e;
+  color: #ffffff;
+  border: none;
+  border-radius: 3px !important;
+}
+.fill-api-button .button-edit:hover {
+  background-color: #3ec487;
+}
+.fill-api-button .button-dell {
+  margin: 0 10px 0 0;
+  background-color: var(--el-color-info-light-9);
+  color: var(--el-color-info);
+  border: none;
+  border-radius: 3px !important;
+}
+.fill-api-button .button-dell:hover {
+  background-color: var(--el-color-info-light-7);
+}
+.fill-pagination {
+  float: left;
+  width: 100%;
+  margin: 40px 0 0 0;
 }
 </style>

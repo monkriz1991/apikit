@@ -47,68 +47,74 @@ const apiTemplate = reactive({
         <el-page-header @click="$router.back()" title="Назад">
           <template #content>name tema</template>
         </el-page-header>
-        <div class="card-add-block">
-          <el-form :model="form" label-width="120px">
-            {{ form }}
-            <div
-              v-for="(item, index) in apiTemplate.nameObject"
-              :key="item"
-              class="card-add-el"
-            >
-              <div class="card-el-item" v-if="item == 'String'">
-                <el-input
-                  v-model="form[index]"
-                  :placeholder="`Введите` + ' ' + index"
-                />
-              </div>
-              <div class="card-el-item" v-if="item == 'Number'">
-                <el-input
-                  type="Number"
-                  v-model.number="form[index]"
-                  :placeholder="`Введите` + ' ' + index"
-                />
-              </div>
-              <div class="card-el-item" v-if="item == 'Text'">
-                <el-input
-                  :autosize="{ minRows: 4, maxRows: 8 }"
-                  type="textarea"
-                  v-model.number="form[index]"
-                  maxlength="10000"
-                  show-word-limit
-                  :placeholder="`Введите` + ' ' + index"
-                />
-              </div>
-              <div class="card-el-item" v-if="item == 'Boolean'">
-                <div class="mb-2 flex items-center text-sm">
-                  <el-radio-group v-model="form[index]" class="ml-4">
-                    <el-radio label="true" size="large"
-                      >true ( истина )</el-radio
-                    >
-                    <el-radio label="false" size="large"
-                      >false ( ложь )</el-radio
-                    >
-                  </el-radio-group>
-                </div>
-              </div>
-              <div class="card-el-item" v-if="item == 'File'">
-                <el-upload
-                  v-model:file-list="form[index]"
-                  class="upload-demo"
-                  drag
-                  action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15"
-                  multiple
+        <div class="columns">
+          <div class="column is-8">
+            <div class="card-add-block">
+              <el-form :model="form" label-width="120px">
+                <div
+                  v-for="(item, index) in apiTemplate.nameObject"
+                  :key="item"
+                  class="card-add-el"
                 >
-                  <el-icon class="el-icon--upload"><upload-filled /></el-icon>
-                  <div class="el-upload__text">
-                    Перетащите файл (файлы) или <em>нажмите для загрузки</em>
+                  <div class="card-el-item" v-if="item == 'String'">
+                    <el-input
+                      v-model="form[index]"
+                      :placeholder="`Введите` + ' ' + index"
+                    />
                   </div>
-                  <template #tip>
-                    <div class="el-upload__tip">Размером не более 1 500kb</div>
-                  </template>
-                </el-upload>
-              </div>
-              <div class="card-el-item" v-if="item == 'Array'">Array</div>
-              <!-- <div class="card-el-item" v-if="typeof item == 'object'">
+                  <div class="card-el-item" v-if="item == 'Number'">
+                    <el-input
+                      type="Number"
+                      v-model.number="form[index]"
+                      :placeholder="`Введите` + ' ' + index"
+                    />
+                  </div>
+                  <div class="card-el-item" v-if="item == 'Text'">
+                    <el-input
+                      :autosize="{ minRows: 4, maxRows: 8 }"
+                      type="textarea"
+                      v-model.number="form[index]"
+                      maxlength="10000"
+                      show-word-limit
+                      :placeholder="`Введите` + ' ' + index"
+                    />
+                  </div>
+                  <div class="card-el-item" v-if="item == 'Boolean'">
+                    <div class="mb-2 flex items-center text-sm">
+                      <el-radio-group v-model="form[index]" class="ml-4">
+                        <el-radio label="true" size="large"
+                          >true ( истина )</el-radio
+                        >
+                        <el-radio label="false" size="large"
+                          >false ( ложь )</el-radio
+                        >
+                      </el-radio-group>
+                    </div>
+                  </div>
+                  <div class="card-el-item" v-if="item == 'File'">
+                    <el-upload
+                      v-model:file-list="form[index]"
+                      class="upload-demo"
+                      drag
+                      action="#"
+                      multiple
+                    >
+                      <el-icon class="el-icon--upload"
+                        ><upload-filled
+                      /></el-icon>
+                      <div class="el-upload__text">
+                        Перетащите файл (файлы) или
+                        <em>нажмите для загрузки</em>
+                      </div>
+                      <template #tip>
+                        <div class="el-upload__tip">
+                          Размером не более 1 500kb
+                        </div>
+                      </template>
+                    </el-upload>
+                  </div>
+                  <div class="card-el-item" v-if="item == 'Array'">Array</div>
+                  <!-- <div class="card-el-item" v-if="typeof item == 'object'">
                 <div
                   v-for="input in apiTemplate.nameObject[index]"
                   :key="input"
@@ -123,10 +129,15 @@ const apiTemplate = reactive({
                   </div>
                 </div>
               </div> -->
-
-              <!-- {{ index }}:{{ item }} -->
+                </div>
+              </el-form>
             </div>
-          </el-form>
+          </div>
+          <div class="column is-4">
+            <pre v-highlightjs>
+                <code class="javascript">{{ form }}</code>
+              </pre>
+          </div>
         </div>
       </div>
     </div>
