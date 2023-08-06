@@ -21,7 +21,6 @@ watch(visibleModal, (input) => {
 });
 const dialogPjectadd = async () => {
   const { user } = storeToRefs(useAuthStore());
-  debugger
   const { data, pending } = await BaseApiFetch(
         '/apps/',
         {
