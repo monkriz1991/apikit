@@ -1,8 +1,10 @@
 <script setup>
 import { storeToRefs } from "pinia";
 import { useAuthStore } from "/store/auth";
+import {BaseApiFetch} from "~/composables/BaseApiFetch";
 
 const createShow = ref("create");
+let ListOfApp = ref([]);
 const apiArr = ref(["catalogCompany", "AboutCompany", "my_product"]);
 const { $openDell } = useNuxtApp();
 const allProject = ref(0);
@@ -14,6 +16,20 @@ const addProject = (item) => {
     visibleModal.value = item.value;
   }
 };
+/**
+ * функция получает список всех приложений пользователя
+ * @returns {Promise<void>}
+ */
+const getListProjects = async () => {
+  const { data, pending } = await BaseApiFetch('/apps/',{method: "get"});
+  ListOfApp.value = data?.value?.results
+  console.log(data.value)
+};
+
+watch(createShow, value => {
+  if(value==='create') getListProjects()
+}, {deep: true, immediate: true})
+
 </script>
 <template>
   <div>
@@ -29,16 +45,14 @@ const addProject = (item) => {
               <Transition appear name="fade" mode="out-in">
                 <div v-if="createShow === 'create'">
                   <el-collapse accordion>
-                    <el-collapse-item name="1">
+                    <el-collapse-item v-for="(app, index) in ListOfApp" :name="index">
                       <template #title
-                        >Товары
-                        <el-tag class="ml-2" type="info"
-                          >catalog</el-tag
-                        ></template
+                        >{{app.name}}
+                        <el-tag v-for="tag in app.tags" class="ml-2" type="info">{{tag.name}}</el-tag></template
                       >
-                      <div v-for="item in apiArr" :key="item">
+                      <div v-for="api in app.apis" :key="api.id">
                         <div class="cab-project-api">
-                          <span class="name-api">{{ item }}</span>
+                          <span class="name-api">{{ api.name }}</span>
                           <el-tag
                             class="ml-2"
                             type="danger"
@@ -56,34 +70,6 @@ const addProject = (item) => {
                             >
                               Удалить
                             </button>
-                          </div>
-                        </div>
-                      </div>
-                    </el-collapse-item>
-                    <el-collapse-item name="2">
-                      <template #title
-                        >Информация о копмании<el-tag class="ml-2" type="info"
-                          >AboutCompany</el-tag
-                        ></template
-                      >
-                      <div>
-                        <div v-for="item in apiArr" :key="item">
-                          <div class="cab-project-api">
-                            <span>{{ item }}</span>
-                            <el-tag class="ml-2" type="danger" effect="plain"
-                              >Записей: 125</el-tag
-                            >
-                            <div class="cab-api-button fill-api-button">
-                              <button class="button is-small button-edit">
-                                Изменить
-                              </button>
-                              <button
-                                class="button is-small button-dell"
-                                @click.prevent="$openDell"
-                              >
-                                Удалить
-                              </button>
-                            </div>
                           </div>
                         </div>
                       </div>
