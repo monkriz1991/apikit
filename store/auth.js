@@ -8,8 +8,9 @@ export const useAuthStore = defineStore("auth", {
   }),
   actions: {
     async authenticateUser({ username, password }) {
+      let app = useNuxtApp()
       const { data, pending } = await useFetch(
-        "https://api.valenchits.com/login/oauth/",
+        app.$config.public.authCustom.baseURL + app.$config.public.authCustom.login,
         {
           method: "post",
           headers: { "Content-Type": "application/json" },
