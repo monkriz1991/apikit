@@ -24,6 +24,9 @@ Start the development server on `http://localhost:3000`
 ```bash
 npm run dev
 ```
+ Для локальной разработки с использваонием Docker контейнеров других сервисов, нужно создать
+.env файл и скопирвать ключи из файла env.example и запонлить переменные нужными значениями
+
 
 ## Production
 
