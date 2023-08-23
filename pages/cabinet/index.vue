@@ -25,6 +25,7 @@ async function getListProjects() {
   createShow.value = ListOfApp.value;
   console.log(data);
 }
+getListProjects();
 </script>
 <template>
   <div>
