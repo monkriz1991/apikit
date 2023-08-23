@@ -50,7 +50,7 @@ const apiTemplate = reactive({
         <div class="columns">
           <div class="column is-8">
             <div class="card-add-block">
-              <el-form :model="form" label-width="120px">
+              <el-form :model="form" label-width="120px" @submit.prevent>
                 <div
                   v-for="(item, index) in apiTemplate.nameObject"
                   :key="item"
@@ -143,15 +143,4 @@ const apiTemplate = reactive({
     </div>
   </div>
 </template>
-<style>
-.card-add-block {
-  float: left;
-  width: 100%;
-  margin: 40px 0;
-}
-.card-add-el {
-  float: left;
-  width: 100%;
-  padding: 10px 0;
-}
-</style>
+<style></style>

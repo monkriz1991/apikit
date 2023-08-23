@@ -1,7 +1,9 @@
 <script setup>
-import { UploadFilled } from "@element-plus/icons-vue";
+// import { UploadFilled } from "@element-plus/icons-vue";
 const route = useRoute();
 const form = reactive({});
+const contItem = ref(1);
+const checkArray = reactive([]);
 const apiTemplate = reactive({
   nameObject: {
     id: 1,
@@ -10,8 +12,9 @@ const apiTemplate = reactive({
     currency: "String",
     description: "Text",
     activ: "Boolean",
+    date: "Date",
     img: "File",
-    img_all: "Array",
+    img_allIn: [],
     filter: {
       id: 1,
       kirilica: "String",
@@ -21,19 +24,42 @@ const apiTemplate = reactive({
     char: [
       {
         id: 4,
-        kirilica: "Mufty",
-        value: "Муфты",
-        position: 10,
-      },
-      {
-        id: 1,
-        kirilica: "Zaglushka",
-        value: "Заглушка",
-        position: 0,
+        kirilica: "String",
+        value: "String",
+        position: "Number",
       },
     ],
   },
 });
+const optionsArray = [
+  {
+    value: "String",
+    label: "Строка",
+  },
+  {
+    value: "Number",
+    label: "Число",
+  },
+  {
+    value: "Data",
+    label: "Дата",
+  },
+  {
+    value: "Boolean",
+    label: "Логический",
+  },
+];
+const formArray = (item, name) => {
+  console.log(checkArray);
+  form[item] = [];
+};
+const addArrayInput = () => {
+  contItem.value += 1;
+};
+const removeArrayInput = () => {
+  checkArray.length = 0;
+  contItem.value -= 1;
+};
 // console.log(typeof apiTemplate);
 </script>
 <template>
@@ -50,7 +76,7 @@ const apiTemplate = reactive({
         <div class="columns">
           <div class="column is-8">
             <div class="card-add-block">
-              <el-form :model="form" label-width="120px">
+              <el-form :model="form" @submit.prevent label-width="120px">
                 <div
                   v-for="(item, index) in apiTemplate.nameObject"
                   :key="item"
@@ -69,6 +95,14 @@ const apiTemplate = reactive({
                       :placeholder="`Введите` + ' ' + index"
                     />
                   </div>
+                  <!-- <div class="card-el-item" v-if="item == 'Date'">
+                    <el-date-picker
+                      type="date"
+                      style="width: 100%"
+                      v-model="form[index]"
+                      :placeholder="`Введите` + ' ' + index"
+                    />
+                  </div> -->
                   <div class="card-el-item" v-if="item == 'Text'">
                     <el-input
                       :autosize="{ minRows: 4, maxRows: 8 }"
@@ -92,7 +126,7 @@ const apiTemplate = reactive({
                     </div>
                   </div>
                   <div class="card-el-item" v-if="item == 'File'">
-                    <el-upload
+                    <!-- <el-upload
                       v-model:file-list="form[index]"
                       class="upload-demo"
                       drag
@@ -111,9 +145,59 @@ const apiTemplate = reactive({
                           Размером не более 1 500kb
                         </div>
                       </template>
-                    </el-upload>
+                    </el-upload> -->
                   </div>
-                  <div class="card-el-item" v-if="item == 'Array'">Array</div>
+
+                  <div class="card-el-item" v-if="typeof item == 'object'">
+                    <div class="card-el-item-arr">
+                      <div class="card-el-item-arr-el">
+                        <div class="">
+                          <div v-for="(iTemN, iNdexV) in contItem" :key="iTemN">
+                            <div v-if="checkArray[item + iNdexV] == 'String'">
+                              <el-input
+                                v-model="form[index][item + iNdexV]"
+                                :placeholder="`Введите` + ' ' + index"
+                              />
+                            </div>
+                            <div v-if="checkArray[item + iNdexV] === 'Number'">
+                              <el-input
+                                type="Number"
+                                v-model.number="form[index][iNdexV]"
+                                :placeholder="`Введите` + ' ' + index"
+                              />
+                            </div>
+                            {{ form[item + iNdexV] }}
+                            <el-select
+                              v-model="checkArray[item + iNdexV]"
+                              @change="formArray(index, item)"
+                              class="m-2"
+                              placeholder="Select"
+                              size="large"
+                            >
+                              <el-option
+                                v-for="item in optionsArray"
+                                :key="item.value"
+                                :label="item.label"
+                                :value="item.value"
+                              />
+                            </el-select>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="">
+                        <button class="button" @click="addArrayInput">
+                          <span class="is-large">
+                            <icon name="line-md:plus" />
+                          </span>
+                        </button>
+                        <button class="button" @click="removeArrayInput">
+                          <span class="icon is-large">
+                            <icon name="line-md:remove" />
+                          </span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
                   <!-- <div class="card-el-item" v-if="typeof item == 'object'">
                 <div
                   v-for="input in apiTemplate.nameObject[index]"
@@ -143,15 +227,3 @@ const apiTemplate = reactive({
     </div>
   </div>
 </template>
-<style>
-.card-add-block {
-  float: left;
-  width: 100%;
-  margin: 40px 0;
-}
-.card-add-el {
-  float: left;
-  width: 100%;
-  padding: 10px 0;
-}
-</style>

@@ -1,7 +1,7 @@
-<script lang="ts" setup>
-import {BaseApiFetch} from "~/composables/BaseApiFetch";
-import {storeToRefs} from "pinia";
-import {useAuthStore} from "~/store/auth";
+<script setup>
+import { BaseApiFetch } from "~/composables/BaseApiFetch";
+import { storeToRefs } from "pinia";
+import { useAuthStore } from "/store/auth";
 
 const props = defineProps({
   modalAddProject: {
@@ -21,18 +21,14 @@ watch(visibleModal, (input) => {
 });
 const dialogPjectadd = async () => {
   const { user } = storeToRefs(useAuthStore());
-  const { data, pending } = await BaseApiFetch(
-        '/apps/',
-        {
-          method: "post",
-          body: {
-            "name": formAccessibility.nameProject,
-            "client": user.value?.client_id[0] // todo пока костыль потом, когда будет страница клиента нужно передеать получение его
-          },
-        }
-      );
+  const { data, pending } = await BaseApiFetch("/apps/", {
+    method: "post",
+    body: {
+      name: formAccessibility.nameProject,
+      client: user.value?.client_id[0], // todo пока костыль потом, когда будет страница клиента нужно передеать получение его
+    },
+  });
 };
-
 
 const formAccessibility = reactive({
   nameProject: "",

@@ -42,19 +42,22 @@ const logout = () => {
             </button>
           </nuxt-link>
           <nuxt-link v-if="authenticated" to="/cabinet" class="mr-3">
-            <button class="button is-success is-outlined bt-c-suss-line">
+            <button class="button is-light bt-c-suss-line">
               <span class="icon">
-                <icon name="emojione-monotone:file-cabinet" />
+                <icon name="fluent:layer-diagonal-person-20-filled" />
               </span>
               <span>Кабинет</span>
             </button>
           </nuxt-link>
           <button
             v-if="authenticated"
-            class="button is-success bt-c-suss"
+            class="button is-dark bt-c-suss"
             @click="logout"
           >
-            Выйти
+            <span class="icon">
+              <icon name="fluent:conference-room-16-regular" />
+            </span>
+            <span>Выйти</span>
           </button>
         </div>
       </nav>

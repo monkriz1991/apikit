@@ -17,6 +17,6 @@
   display: none;
 }
 .hero-section {
-  margin: 50px 0;
+  margin: 20px 0;
 }
 </style>

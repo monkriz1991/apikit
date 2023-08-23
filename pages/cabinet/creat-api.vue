@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { UserFilled } from "@element-plus/icons-vue";
-const createShow = ref("create");
+const createShow = ref("createHand");
 </script>
 <template>
   <div>
@@ -20,7 +20,7 @@ const createShow = ref("create");
                     @click="createShow = 'createHand'"
                   >
                     <icon name="material-symbols:touch-app-outline-rounded" />
-                    <span>Собрать в ручную</span>
+                    <span>Собрать коллекцию</span>
                   </button>
                 </div>
                 <div class="column">
@@ -46,17 +46,17 @@ const createShow = ref("create");
               </div>
               <div v-else-if="createShow === 'createHand'">
                 <CreateHand>
-                  <template v-slot:link-back>
+                  <!-- <template v-slot:link-back>
                     <el-page-header @back="createShow = 'create'" title="Назад">
                       <template #content>
                         <div class="flex items-center">
                           <span class="text-sm mr-3">
-                            Создание api в ручную
+                            Создание api коллекции
                           </span>
                         </div>
                       </template>
                     </el-page-header>
-                  </template>
+                  </template> -->
                 </CreateHand>
               </div>
               <div v-else-if="createShow === 'createFile'">
@@ -112,9 +112,9 @@ const createShow = ref("create");
   text-align: left;
   width: 100%;
   border-radius: 15px;
-  background: transparent;
+  background: white;
   cursor: pointer;
-  border: 2px solid #e5e7eb;
+  border: 0px solid #e5e7eb;
 }
 .creat-block .icon {
   display: block;
@@ -135,5 +135,9 @@ const createShow = ref("create");
   /* background: #eeeeee; */
   /* border-color: #00dc82; */
   border-color: #787878;
+}
+.creat-block:disabled:hover {
+  border: 2px solid #e5e7eb;
+  color: #c6c6c6;
 }
 </style>
