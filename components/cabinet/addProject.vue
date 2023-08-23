@@ -25,6 +25,8 @@ const dialogPjectadd = async () => {
     method: "post",
     body: {
       name: formAccessibility.nameProject,
+      db_name: formAccessibility.nameBase,
+      comment: formAccessibility.descriptionProject,
       client: user.value?.client_id[0], // todo пока костыль потом, когда будет страница клиента нужно передеать получение его
     },
   });
@@ -64,7 +66,7 @@ const formAccessibility = reactive({
             <el-alert
               title="Допустимые имена"
               type="warning"
-              description="Только на латинице, без пробелов, из разрешённых спецсимволов - ( _ ), можно использовать заглавные буквы и цифры: catalog, MyCompany, galery_product."
+              description="Только на латинице, без пробелов, и без спецсимволов, можно использовать заглавные буквы и цифры ( только не первым символом ): catalog, MyCompany, galery_product."
               show-icon
             />
             <el-form-item>
