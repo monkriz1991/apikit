@@ -32,6 +32,12 @@ const getListProjects = async () => {
   projectArray.value = data?.value?.results;
   return data.value;
 };
+
+const createObject = async (payload) =>{
+  const { data, pending } = await BaseApiFetch('/create/api/',{method: "post", body: payload});
+  console.log(data)
+}
+
 onMounted(async () => {
   let response = await getListProjects();
   console.log(response.count, "count");
@@ -82,8 +88,13 @@ const toggleInput = (el) => {
   hidennameObject.value = false;
 };
 async function sendObject(item) {
-  // let res = await $auth.login({ item });
-  console.log(item);
+  let tableName = Object.keys(item)[0];
+  let payload = {
+    tableName: tableName,
+    entities: item[tableName],
+    appId: project.value
+  }
+  await createObject(payload)
 }
 counterForm(nameObjectFun, nameObject.value);
 </script>
