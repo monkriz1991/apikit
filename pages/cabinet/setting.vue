@@ -15,7 +15,7 @@ const userMeny = ref(user.value);
         </div>
         <div class="column is-three-quarters">
           <div class="setting-cab">
-            <h1>Приветствуем {{ userMeny.first_name }}</h1>
+            <h1>Профиль: {{ userMeny.first_name }}</h1>
             <div class="setting-avatar">
               <h2>Аватар профиля</h2>
               <div>
@@ -58,5 +58,12 @@ const userMeny = ref(user.value);
   font-size: 60px;
   border-radius: 22px;
   background: #a4a4a4;
+}
+.setting-cab {
+  float: left;
+  width: 100%;
+  background: #fff;
+  padding: 50px;
+  border-radius: 25px;
 }
 </style>

@@ -42,12 +42,20 @@ const options = [
     label: "Дата",
   },
   {
+    value: "File",
+    label: "Файл(ы)",
+  },
+  {
     value: "Array",
     label: "Массив",
   },
   {
     value: "Object",
     label: "Объект",
+  },
+  {
+    value: "Array[Object]",
+    label: "Массив Объектов",
   },
 ];
 const levelOneObject = reactive({ select: [] });
@@ -95,8 +103,13 @@ watch(dynamicForm.input, (input) => {
     levelOneObject.select = [];
     objectCache.cache = {};
     for (let item in input) {
-      if (input[item].type == "Object") {
-        pushObject.objectItem[objectItem.value][input[item].value] = {};
+      if (input[item].type == "Object" || input[item].type == "Array[Object]") {
+        if (input[item].type == "Array[Object]") {
+          pushObject.objectItem[objectItem.value][input[item].value] = [{}];
+        } else {
+          pushObject.objectItem[objectItem.value][input[item].value] = {};
+        }
+
         levelOneObject.select.push({
           value: input[item].value,
           label: input[item].value,
@@ -113,6 +126,7 @@ watch(dynamicForm.input, (input) => {
   }
   if (props.lavelValue == 2) {
     props.dynamicLevelObject[props.dynamicLevelName][twoSelect.value] = {};
+    // props.dynamicLevelObject[props.dynamicLevelName][twoSelect.value] = [{}];
     for (let item in input) {
       if (input[item].type != "") {
         for (let itemarr in props.dynamicLevelObject[props.dynamicLevelName]) {
@@ -120,10 +134,12 @@ watch(dynamicForm.input, (input) => {
             delete props.dynamicLevelObject[props.dynamicLevelName][itemarr][
               input[item].value
             ];
-          } else {
           }
         }
         if (input[item].type == twoSelect.value) {
+          // props.dynamicLevelObject[props.dynamicLevelName][twoSelect.value][0][
+          //   input[item].value
+          // ] = "";
           props.dynamicLevelObject[props.dynamicLevelName][twoSelect.value][
             input[item].value
           ] = "";
@@ -132,14 +148,14 @@ watch(dynamicForm.input, (input) => {
     }
   }
 });
-const levelItem = (item) => {
+const levelItem = (item, index) => {
   twoSelect.value = item;
 };
 </script>
 <template>
   <div>
     <div
-      class="field columns"
+      class="columns"
       v-for="(input, index) in dynamicForm.input"
       :key="index"
     >
@@ -151,12 +167,7 @@ const levelItem = (item) => {
         />
       </div>
       <div v-if="lavelValue == 1" class="column is-narrow">
-        <el-select
-          v-model="input.type"
-          clearable
-          placeholder="Тип данных"
-          size="large"
-        >
+        <el-select v-model="input.type" placeholder="Тип данных" size="large">
           <el-option
             v-for="item in options"
             :key="item.value"
@@ -166,11 +177,10 @@ const levelItem = (item) => {
         </el-select>
       </div>
 
-      <div v-if="lavelValue == 2" class="column is-4">
+      <div v-if="lavelValue == 2" class="column is-narrow">
         <el-select
           v-model="input.type"
           @change="levelItem"
-          clearable
           placeholder="Объект"
           size="large"
         >
@@ -182,7 +192,7 @@ const levelItem = (item) => {
           />
         </el-select>
       </div>
-      <div class="column has-text-right">
+      <div class="column has-text-right is-narrow">
         <button class="button" @click="removeInput(input)">
           <span class="icon is-large">
             <icon name="line-md:remove" />

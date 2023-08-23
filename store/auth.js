@@ -8,9 +8,10 @@ export const useAuthStore = defineStore("auth", {
   }),
   actions: {
     async authenticateUser({ username, password }) {
-      let app = useNuxtApp()
+      let app = useNuxtApp();
       const { data, pending } = await useFetch(
-        app.$config.public.authCustom.baseURL + app.$config.public.authCustom.login,
+        app.$config.public.authCustom.baseURL +
+          app.$config.public.authCustom.login,
         {
           method: "post",
           headers: { "Content-Type": "application/json" },

@@ -28,7 +28,7 @@ export default defineNuxtConfig({
   vite: {},
   runtimeConfig: {
     public: {
-      baseURL: process.env.baseURL || "https://new.arhiterm.by/",
+      baseURL: process.env.baseURL || "https://api.valenchits.com",
       authCustom: {
         baseURL: process.env.baseAuthURL || "https://api.valenchits.com",
         login: "/login/oauth/",
