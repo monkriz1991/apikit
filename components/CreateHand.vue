@@ -18,17 +18,25 @@ const editableTabs = ref([
   },
 ]);
 const project = ref("");
-const projectArray = [
-  {
-    value: "product",
-    label: "Товары",
-  },
-  {
-    value: "slider",
-    label: "Слайдер",
-  },
-];
-
+let projectArray = ref([]);
+/**
+ * функция получает список всех приложений пользователя
+ * @returns {Promise<void>}
+ */
+const getListProjects = async () => {
+  // todo задвоеная ф-ия ткакая же в cabinet/index.vue
+  const { data, pending } = await BaseApiFetch("/apps/", {
+    method: "get",
+    params: { limits: 50 },
+  });
+  projectArray.value = data?.value?.results;
+  return data.value;
+};
+onMounted(async () => {
+  let response = await getListProjects();
+  console.log(response.count, "count");
+  console.log(response.results, "results");
+});
 const addTab = (targetName) => {
   const newTabName = `${editableTabs.value.length + 1}`;
   editableTabs.value.push({
@@ -75,6 +83,7 @@ const toggleInput = (el) => {
 };
 async function sendObject(item) {
   // let res = await $auth.login({ item });
+  console.log(item);
 }
 counterForm(nameObjectFun, nameObject.value);
 </script>
@@ -112,9 +121,9 @@ counterForm(nameObjectFun, nameObject.value);
             >
               <el-option
                 v-for="item in projectArray"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id"
               />
             </el-select>
             <div class="path-cr-project">
