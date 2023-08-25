@@ -2,8 +2,8 @@
 import InputHand from "./cabinet/InputHand.vue";
 const cod = shallowRef(InputHand);
 const dynamicFormPre = ref({});
-const nameObject = ref("nameApi");
-const nameObjectFun = ref({ nameApi: {} });
+const nameObject = ref("nameapi");
+const nameObjectFun = ref({ nameapi: {} });
 const dynamicLevelSelect = ref({});
 const dynamicLevelName = ref("");
 const hidennameObject = ref(false);
@@ -33,10 +33,13 @@ const getListProjects = async () => {
   return data.value;
 };
 
-const createObject = async (payload) =>{
-  const { data, pending } = await BaseApiFetch('/create/api/',{method: "post", body: payload});
-  console.log(data)
-}
+const createObject = async (payload) => {
+  const { data, pending } = await BaseApiFetch("/create/api/", {
+    method: "post",
+    body: payload,
+  });
+  console.log(data);
+};
 
 onMounted(async () => {
   let response = await getListProjects();
@@ -92,9 +95,9 @@ async function sendObject(item) {
   let payload = {
     tableName: tableName,
     entities: item[tableName],
-    appId: project.value
-  }
-  await createObject(payload)
+    appId: project.value,
+  };
+  await createObject(payload);
 }
 counterForm(nameObjectFun, nameObject.value);
 </script>

@@ -179,13 +179,13 @@ footer {
 }
 .fill-api-button .button-edit {
   margin: 0 10px 0 0;
-  background-color: #48c78e;
+  background-color: #595959;
   color: #ffffff;
   border: none;
   border-radius: 3px !important;
 }
 .fill-api-button .button-edit:hover {
-  background-color: #3ec487;
+  background-color: #2e2e2e;
 }
 .fill-api-button .button-dell {
   margin: 0 10px 0 0;
