@@ -25,6 +25,7 @@ const { data: getListProjects, pending } = await BaseApiFetch("/apps/", {
 const dellProject = async (id) => {
   alert(id);
 };
+
 ListOfApp.value = getListProjects?.value?.results;
 if (getListProjects.value.results) {
   createShow.value = true;

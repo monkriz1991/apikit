@@ -498,7 +498,10 @@ footer {
 .card-add-block {
   float: left;
   width: 100%;
-  margin: 40px 0;
+  margin: 0px 0;
+  background: #fff;
+  padding: 30px;
+  border-radius: 12px;
 }
 .card-add-el {
   float: left;

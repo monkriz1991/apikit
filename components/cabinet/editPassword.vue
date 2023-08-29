@@ -51,7 +51,7 @@ const onSubmit = (formEl) => {
     <div class="g-pass">
       <h3>Безопасность</h3>
       <button
-        class="button mt-3 edit-s-button is-success is-outlined"
+        class="button mt-3 edit-s-button"
         @click="showForm = true"
         v-show="showForm == false"
       >
@@ -88,13 +88,10 @@ const onSubmit = (formEl) => {
             show-password
           />
         </el-form-item>
-        <button class="button is-success" @click="onSubmit(ruleFormRef)">
+        <button class="button is-warning" @click="onSubmit(ruleFormRef)">
           Сохранить
         </button>
-        <button
-          class="button ml-3 is-success is-outlined"
-          @click="showForm = false"
-        >
+        <button class="button ml-3 is-outlined" @click="showForm = false">
           Отмена
         </button>
       </el-form>
