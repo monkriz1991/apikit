@@ -9,10 +9,9 @@ const ruleFormRef = ref();
 const showForm = ref(false);
 
 const form = reactive({
-  email: "",
-  name: "",
+  name: user.value.first_name,
+  email: user.value.email,
 });
-
 const onSubmit = (formEl) => {
   if (!formEl) return;
   formEl.validate((valid) => {
@@ -31,7 +30,7 @@ const onSubmit = (formEl) => {
     <div class="g-info">
       <h3>Информация профиля</h3>
       <button
-        class="button mt-3 edit-s-button is-success is-outlined"
+        class="button mt-3 edit-s-button"
         @click="showForm = true"
         v-show="showForm == false"
       >
@@ -86,13 +85,10 @@ const onSubmit = (formEl) => {
             clearable
           />
         </el-form-item>
-        <button class="button is-success" @click="onSubmit(ruleFormRef)">
+        <button class="button is-warning" @click="onSubmit(ruleFormRef)">
           Сохранить
         </button>
-        <button
-          class="button ml-3 is-success is-outlined"
-          @click="showForm = false"
-        >
+        <button class="button ml-3 is-outlined" @click="showForm = false">
           Отмена
         </button>
       </el-form>
@@ -119,7 +115,8 @@ const onSubmit = (formEl) => {
   border-radius: 6px;
   padding: 8px 20px;
   height: auto;
-  font-size: 15px;
+  font-size: 14px;
+  border: 1px solid #a5a5a5;
 }
 .g-info-prev {
   margin: 30px 0 30px;
@@ -146,7 +143,7 @@ const onSubmit = (formEl) => {
 }
 .g-info .el-input--large .el-input__wrapper,
 .g-pass .el-input--large .el-input__wrapper {
-  padding: 3px 15px;
+  padding: 6px 15px;
   border-radius: 10px;
   font-size: 18px;
 }

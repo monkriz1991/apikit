@@ -3,7 +3,7 @@ import { storeToRefs } from "pinia";
 import { useAuthStore } from "/store/auth";
 import { BaseApiFetch } from "~/composables/BaseApiFetch";
 
-const createShow = ref();
+const createShow = ref(false);
 let ListOfApp = ref([]);
 const apiArr = ref(["catalogCompany", "AboutCompany", "my_product"]);
 const { $openDell } = useNuxtApp();
@@ -19,11 +19,16 @@ const addProject = (item) => {
  * функция получает список всех приложений пользователя
  * @returns {Promise<void>}
  */
-async function getListProjects() {
-  const { data, pending } = await BaseApiFetch("/apps/", { method: "get" });
-  ListOfApp.value = data?.value?.results;
-  createShow.value = ListOfApp.value;
-  console.log(data);
+const { data: getListProjects, pending } = await BaseApiFetch("/apps/", {
+  method: "get",
+});
+const dellProject = async (id) => {
+  alert(id);
+};
+
+ListOfApp.value = getListProjects?.value?.results;
+if (getListProjects.value.results) {
+  createShow.value = true;
 }
 </script>
 <template>
@@ -38,29 +43,31 @@ async function getListProjects() {
           <div class="column is-three-quarters">
             <div class="cab-project">
               <Transition appear name="fade" mode="out-in">
-                <div v-if="createShow !== undefined">
+                <div v-if="createShow == true">
                   <el-collapse accordion>
                     <el-collapse-item v-for="app in ListOfApp" :key="app">
-                      <template #title
-                        >{{ app.name }}
-                        <el-tag
+                      <template #title>
+                        <div class="cab-project-db-name">{{ app.db_name }}</div>
+                        <div class="cab-project-name">{{ app.name }}</div>
+                        <!-- <el-tag
                           v-for="tag in app.tags"
                           :key="tag"
                           class="ml-2"
                           type="info"
                           >{{ tag.name }}</el-tag
-                        ></template
-                      >
+                        > -->
+                        <!-- <el-tag class="ml-2" type="info">записей: 23</el-tag> -->
+                      </template>
                       <div v-for="api in app.apis" :key="api.id">
                         <div class="cab-project-api">
                           <span class="name-api">{{ api.name }}</span>
-                          <el-tag
+                          <!-- <el-tag
                             class="ml-2"
                             type="danger"
                             effect="plain"
                             size="small"
                             >Записей: 125</el-tag
-                          >
+                          > -->
                           <div class="cab-api-button fill-api-button">
                             <button class="button is-small button-edit">
                               Изменить
@@ -74,15 +81,21 @@ async function getListProjects() {
                           </div>
                         </div>
                       </div>
+                      <div class="cab-dell-project">
+                        <button class="button" @click="dellProject(app.id)">
+                          <span class="icon">
+                            <icon
+                              name="fluent:channel-dismiss-24-regular"
+                            /> </span
+                          ><span>Удалить проект</span>
+                        </button>
+                      </div>
                     </el-collapse-item>
                   </el-collapse>
-                  <div class="cab-project-butt">
-                    <button
-                      class="button is-success is-outlined"
-                      @click="addProject"
-                    >
+                  <div class="cab-project-butt mt-4">
+                    <button class="button is-warning" @click="addProject">
                       <span class="icon">
-                        <icon name="fluent:add-square-multiple-20-filled" />
+                        <icon name="fluent:channel-add-28-regular" />
                       </span>
                       <span>Создать проект</span>
                     </button>
@@ -97,7 +110,7 @@ async function getListProjects() {
                     >
                   </div>
                 </div>
-                <div v-else-if="createShow == undefined">
+                <div v-else-if="createShow == false">
                   <div class="cab-none-project">
                     <div class="content">
                       <h4>Создайте ваш первый проект</h4>
@@ -149,18 +162,64 @@ html {
 }
 .column {
 }
+.cab-project-db-name {
+  /* background-color: #f8e081; */
+  /* padding: 15px; */
+  float: left;
+  border-radius: 6px;
+  height: auto;
+  line-height: 1;
+  margin: 0 15px 0 0;
+  font-weight: 400;
+  font-size: 14px;
+  /* color: #f1cd3f; */
+}
+.cab-project-name {
+}
 .cab-project {
   position: relative;
 }
 .cab-project .el-collapse-item__header {
-  padding: 35px 0;
+  padding: 25px;
+  border: none;
+  font-size: 16px;
+  border-radius: 13px;
+  height: auto;
+  flex-flow: column;
+  align-items: flex-start;
+  position: relative;
 }
-.cab-project .el-collapse-item__header {
-  font-size: 15px;
+.cab-project .el-collapse-item__header .el-collapse-item__arrow {
+  font-size: 28px;
+  position: absolute;
+  right: 20px;
+  height: 100%;
+  justify-content: center;
+  top: 0;
 }
-.el-collapse {
+.cab-project .el-collapse {
   float: left;
   width: 100%;
+  border: none;
+}
+.cab-project .el-collapse > .el-collapse-item {
+  margin: 0 0 15px 0;
+}
+.cab-project .el-collapse .el-collapse-item__wrap {
+  padding: 0;
+  border: none;
+  background: transparent;
+}
+.cab-project .el-collapse-item__content {
+  padding: 0;
+  margin: 0 0 15px;
+  background: transparent;
+}
+.cab-project .el-collapse-item__content .cab-project-api {
+  padding: 20px;
+  background: #fff;
+  margin: 15px 0 0;
+  border-radius: 13px;
 }
 .cab-project-api {
   margin: 0 0 10px;
@@ -215,5 +274,19 @@ html {
   line-height: 1.6;
   float: left;
   font-weight: 400;
+}
+.cab-dell-project {
+  float: left;
+  width: 100%;
+  margin: 15px 0 0;
+}
+.cab-dell-project button {
+  float: right;
+  border-radius: 8px;
+  font-size: 14px;
+  padding: 8px 14px;
+  height: auto;
+  background: transparent;
+  border: 1px solid #959595;
 }
 </style>

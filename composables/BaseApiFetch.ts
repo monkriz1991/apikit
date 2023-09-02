@@ -11,5 +11,6 @@ export const BaseApiFetch: typeof useFetch = (request, opts?) => {
     opts["headers"] = opts["headers"]
       ? { ...opts["headers"], ...headers }
       : headers;
+
   return useFetch(request, { baseURL: config.public.baseURL, ...opts });
 };
