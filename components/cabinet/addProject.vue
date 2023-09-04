@@ -19,15 +19,21 @@ watch(visibleModal, (input) => {
     emit("emitVisibleModal", visibleModal);
   }
 });
+const getClients = async () =>{
+  const { data, pending } = await BaseApiFetch("/clients/", {method: "get"});
+  return data
+}
 const dialogPjectadd = async () => {
   const { user } = storeToRefs(useAuthStore());
+  const clients = await getClients()
+  console.log(clients.value.results[0])
   const { data, pending } = await BaseApiFetch("/apps/", {
     method: "post",
     body: {
       name: formAccessibility.nameProject,
       db_name: formAccessibility.nameBase,
       comment: formAccessibility.descriptionProject,
-      client: user.value?.client_id[0], // todo пока костыль потом, когда будет страница клиента нужно передеать получение его
+      client: clients.value.results[0]?.id,
     },
   });
 };
