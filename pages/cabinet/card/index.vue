@@ -3,7 +3,10 @@
 const route = useRoute();
 const form = reactive({});
 const contItem = ref(1);
+let listApisSelect = ref(null);
+let selectedStruct = ref([]);
 const checkArray = reactive([]);
+let listApis = reactive([]);
 const apiTemplate = reactive({
   nameObject: {
     id: 1,
@@ -60,7 +63,33 @@ const removeArrayInput = () => {
   checkArray.length = 0;
   contItem.value -= 1;
 };
-// console.log(typeof apiTemplate);
+const getListApis = async () => {
+  const { data, pending } = await BaseApiFetch("/apis/", {
+    method: "get",
+    params: { limits: 50 },
+  });
+  listApis.value = data?.value?.results;
+  return data.value;
+};
+const getStructApi = async () => {
+  apiTemplate.nameObject = JSON.parse(listApis.value.find(x=>x.id===listApisSelect.value)?.entities.structure)
+  console.log(apiTemplate)
+}
+const saveItem = async () => {
+  console.log(form)
+  let payload = {
+  apiId: listApisSelect,
+    ...form
+  }
+  console.log(payload)
+  const { data, pending } = await BaseApiFetch("/create/item/", {
+    method: "post",
+    body: payload,
+  });
+  console.log(data, 'data')
+}
+getListApis();
+
 </script>
 <template>
   <div class="container">
@@ -71,18 +100,28 @@ const removeArrayInput = () => {
       </div>
       <div class="column is-three-quarters">
         <el-page-header @click="$router.back()" title="Назад">
-          <template #content>name tema</template>
+          <template #content>2name tema</template>
         </el-page-header>
         <div class="columns">
           <div class="column is-8">
             <div class="card-add-block">
               <el-form :model="form" @submit.prevent label-width="120px">
+                <div>
+                <el-select v-model="listApisSelect" @change="getStructApi">
+                  <el-option
+                    v-for="item in listApis.value"
+                    :key="item.id"
+                    :label="item.name"
+                    :value="item.id"
+                  />
+                </el-select>
+              </div>
                 <div
                   v-for="(item, index) in apiTemplate.nameObject"
                   :key="item"
                   class="card-add-el"
                 >
-                  <div class="card-el-item" v-if="item == 'String'">
+                  <div class="card-el-item" v-if="item === 'String'">
                     <span class="card-el-label">{{ index }}</span>
                     <el-input
                       v-model="form[index]"
@@ -90,7 +129,7 @@ const removeArrayInput = () => {
                       :placeholder="`Введите` + ' ' + index"
                     />
                   </div>
-                  <div class="card-el-item" v-if="item == 'Number'">
+                  <div class="card-el-item" v-if="item === 'Number'">
                     <span class="card-el-label">{{ index }}</span>
                     <el-input
                       type="Number"
@@ -99,15 +138,15 @@ const removeArrayInput = () => {
                       :placeholder="`Введите` + ' ' + index"
                     />
                   </div>
-                  <!-- <div class="card-el-item" v-if="item == 'Date'">
+                   <div class="card-el-item" v-if="item === 'Date'">
                     <span class="card-el-label">{{ index }}</span>
                     <el-date-picker
                       type="date"
                       v-model="form[index]"
                       :placeholder="`Введите` + ' ' + index"
                     ></el-date-picker>
-                  </div> -->
-                  <div class="card-el-item" v-if="item == 'Text'">
+                  </div>
+                  <div class="card-el-item" v-if="item === 'Text'">
                     <span class="card-el-label">{{ index }}</span>
                     <el-input
                       :autosize="{ minRows: 4, maxRows: 8 }"
@@ -118,7 +157,7 @@ const removeArrayInput = () => {
                       :placeholder="`Введите` + ' ' + index"
                     />
                   </div>
-                  <div class="card-el-item" v-if="item == 'Boolean'">
+                  <div class="card-el-item" v-if="item === 'Boolean'">
                     <div class="mb-2 flex items-center text-sm">
                       <span class="card-el-label">{{ index }}</span>
                       <el-radio-group v-model="form[index]" class="ml-4">
@@ -220,6 +259,7 @@ const removeArrayInput = () => {
                 </div>
               </div> -->
                 </div>
+                <el-button @click="saveItem">добавить</el-button>
               </el-form>
             </div>
           </div>
