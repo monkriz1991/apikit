@@ -19,6 +19,15 @@ const allApi = ref([
     records: "31",
   },
 ]);
+const getListApis = async () => {
+  const { data, pending } = await BaseApiFetch("/apis/", {
+    method: "get",
+    params: { limits: 50 },
+  });
+  allApi.value = data?.value?.results;
+  return data.value;
+};
+getListApis()
 </script>
 <template>
   <div>

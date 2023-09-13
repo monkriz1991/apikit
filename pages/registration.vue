@@ -39,12 +39,25 @@ const onSubmit = (formEl) => {
   formEl.validate((valid) => {
     if (valid) {
       console.log("submit!");
+      console.log(form);
+      sendRegistrastionData({
+        username: form.email,
+        password: form.password,
+        password2: form.checkPass,
+      })
     } else {
       console.log("error submit!");
       return false;
     }
   });
 };
+
+const sendRegistrastionData = async (payload) =>{
+  console.log(payload)
+  let app = useNuxtApp();
+  const { data, pending } = await useFetch(app.$config.public.authCustom.baseURL +'/registration/',
+      {method: "post", body: payload});k
+}
 </script>
 <template>
   <div class="container">
