@@ -27,7 +27,7 @@ const dellProject = async (id) => {
 };
 
 ListOfApp.value = getListProjects?.value?.results;
-if (getListProjects.value.results) {
+if (ListOfApp.value.length) {
   createShow.value = true;
 }
 </script>

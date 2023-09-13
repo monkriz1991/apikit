@@ -8,6 +8,7 @@ export default defineNuxtConfig({
     "@pinia-plugin-persistedstate/nuxt",
     "@element-plus/nuxt",
     "@nuxt/image",
+    "vue-email/nuxt",
     "nuxt-icon",
     [
       "@nuxtjs/google-fonts",

@@ -8,6 +8,7 @@ const dynamicLevelSelect = ref({});
 const dynamicLevelName = ref("");
 const hidennameObject = ref(false);
 const refInput = ref("");
+const pointerTab = ref({});
 
 const editableTabsValue = ref("1");
 const editableTabs = ref([
@@ -23,15 +24,14 @@ let projectArray = ref([]);
  * функция получает список всех приложений пользователя
  * @returns {Promise<void>}
  */
-const getListProjects = async () => {
-  // todo задвоеная ф-ия ткакая же в cabinet/index.vue
-  const { data, pending } = await BaseApiFetch("/apps/", {
-    method: "get",
-    params: { limits: 50 },
-  });
-  projectArray.value = data?.value?.results;
-  return data.value;
-};
+
+// todo задвоеная ф-ия ткакая же в cabinet/index.vue
+const { data: getListProjects, pending } = await BaseApiFetch("/apps/", {
+  method: "get",
+});
+if (getListProjects.value) {
+  projectArray.value = getListProjects?.value?.results;
+}
 
 const createObject = async (payload) => {
   const { data, pending } = await BaseApiFetch("/create/api/", {
@@ -41,11 +41,6 @@ const createObject = async (payload) => {
   console.log(data);
 };
 
-onMounted(async () => {
-  let response = await getListProjects();
-  console.log(response.count, "count");
-  console.log(response.results, "results");
-});
 const addTab = (targetName) => {
   const newTabName = `${editableTabs.value.length + 1}`;
   editableTabs.value.push({
@@ -100,6 +95,9 @@ async function sendObject(item) {
   await createObject(payload);
 }
 counterForm(nameObjectFun, nameObject.value);
+const tabChange = (e) => {
+  pointerTab.value = e;
+};
 </script>
 <template>
   <div>
@@ -162,6 +160,7 @@ counterForm(nameObjectFun, nameObject.value);
                 type="card"
                 class="demo-tabs"
                 closable
+                @click="tabChange"
                 @tab-remove="removeTab"
               >
                 <el-tab-pane
@@ -178,6 +177,8 @@ counterForm(nameObjectFun, nameObject.value);
                       v-model:dynamicLevelSelect="dynamicLevelSelect"
                       v-model:dynamicLevelName="dynamicLevelName"
                       v-model:dynamicLevelObject="dynamicFormPre"
+                      v-model:pointerTab="pointerTab"
+                      v-model:colTab="editableTabs"
                       @dynamicFormChange="counterForm"
                       @dynamicSelect="selectLevelTwo"
                     ></component>

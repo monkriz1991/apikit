@@ -5,12 +5,12 @@ export const BaseApiFetch: typeof useFetch = (request, opts?) => {
   let headers = {
     Authorization: `Token ${token.value}`,
     "Content-Type": "application/json",
+    Accept: "application/json",
   };
-
-  if (opts)
+  if (opts) {
     opts["headers"] = opts["headers"]
       ? { ...opts["headers"], ...headers }
       : headers;
-
+  }
   return useFetch(request, { baseURL: config.public.baseURL, ...opts });
 };

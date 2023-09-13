@@ -4,49 +4,45 @@ const createShow = ref("createHand");
 </script>
 <template>
   <div>
-    <ClientOnly>
-      <div class="container">
-        <StatCabinet />
-        <div class="columns">
-          <div class="column is-one-quarter">
-            <NavCabinet />
-          </div>
-          <div class="column is-three-quarters">
-            <Transition appear name="fade" mode="out-in">
-              <div v-if="createShow === 'create'" class="columns">
-                <div class="column">
-                  <button
-                    class="creat-block"
-                    @click="createShow = 'createHand'"
-                  >
-                    <icon name="material-symbols:touch-app-outline-rounded" />
-                    <span>Собрать коллекцию</span>
-                  </button>
-                </div>
-                <div class="column">
-                  <button
-                    class="creat-block"
-                    @click="createShow = 'createFile'"
-                    disabled
-                  >
-                    <icon name="bi:filetype-xls" />
-                    <span>Выгрузить из xls</span>
-                  </button>
-                </div>
-                <div class="column">
-                  <button
-                    class="creat-block"
-                    @click="createShow = 'createGoogle'"
-                    disabled
-                  >
-                    <icon name="uiw:file-excel" />
-                    <span>Получить из Google Exel</span>
-                  </button>
-                </div>
+    <div class="container">
+      <StatCabinet />
+      <div class="columns">
+        <div class="column is-one-quarter">
+          <NavCabinet />
+        </div>
+        <div class="column is-three-quarters">
+          <Transition appear name="fade" mode="out-in">
+            <div v-if="createShow === 'create'" class="columns">
+              <div class="column">
+                <button class="creat-block" @click="createShow = 'createHand'">
+                  <icon name="material-symbols:touch-app-outline-rounded" />
+                  <span>Собрать коллекцию</span>
+                </button>
               </div>
-              <div v-else-if="createShow === 'createHand'">
-                <CreateHand>
-                  <!-- <template v-slot:link-back>
+              <div class="column">
+                <button
+                  class="creat-block"
+                  @click="createShow = 'createFile'"
+                  disabled
+                >
+                  <icon name="bi:filetype-xls" />
+                  <span>Выгрузить из xls</span>
+                </button>
+              </div>
+              <div class="column">
+                <button
+                  class="creat-block"
+                  @click="createShow = 'createGoogle'"
+                  disabled
+                >
+                  <icon name="uiw:file-excel" />
+                  <span>Получить из Google Exel</span>
+                </button>
+              </div>
+            </div>
+            <div v-else-if="createShow === 'createHand'">
+              <CreateHand>
+                <!-- <template v-slot:link-back>
                     <el-page-header @back="createShow = 'create'" title="Назад">
                       <template #content>
                         <div class="flex items-center">
@@ -57,43 +53,42 @@ const createShow = ref("createHand");
                       </template>
                     </el-page-header>
                   </template> -->
-                </CreateHand>
-              </div>
-              <div v-else-if="createShow === 'createFile'">
-                <CreateFile>
-                  <template v-slot:link-back>
-                    <el-page-header @back="createShow = 'create'" title="Назад">
-                      <template #content>
-                        <div class="flex items-center">
-                          <span class="text-sm mr-3">
-                            Создание api через файл Xls
-                          </span>
-                        </div>
-                      </template>
-                    </el-page-header>
-                  </template>
-                </CreateFile>
-              </div>
-              <div v-else-if="createShow === 'createGoogle'">
-                <CreateGoogle>
-                  <template v-slot:link-back>
-                    <el-page-header @back="createShow = 'create'" title="Назад">
-                      <template #content>
-                        <div class="flex items-center">
-                          <span class="text-sm mr-3">
-                            Создание api через таблицу Gogle exel
-                          </span>
-                        </div>
-                      </template>
-                    </el-page-header>
-                  </template>
-                </CreateGoogle>
-              </div>
-            </Transition>
-          </div>
+              </CreateHand>
+            </div>
+            <div v-else-if="createShow === 'createFile'">
+              <CreateFile>
+                <template v-slot:link-back>
+                  <el-page-header @back="createShow = 'create'" title="Назад">
+                    <template #content>
+                      <div class="flex items-center">
+                        <span class="text-sm mr-3">
+                          Создание api через файл Xls
+                        </span>
+                      </div>
+                    </template>
+                  </el-page-header>
+                </template>
+              </CreateFile>
+            </div>
+            <div v-else-if="createShow === 'createGoogle'">
+              <CreateGoogle>
+                <template v-slot:link-back>
+                  <el-page-header @back="createShow = 'create'" title="Назад">
+                    <template #content>
+                      <div class="flex items-center">
+                        <span class="text-sm mr-3">
+                          Создание api через таблицу Gogle exel
+                        </span>
+                      </div>
+                    </template>
+                  </el-page-header>
+                </template>
+              </CreateGoogle>
+            </div>
+          </Transition>
         </div>
       </div>
-    </ClientOnly>
+    </div>
   </div>
 </template>
 
