@@ -102,9 +102,9 @@ const tabChange = (e) => {
 <template>
   <div>
     <div class="cr-hand">
-      <div class="link-back">
+      <!-- <div class="link-back">
         <slot name="link-back"></slot>
-      </div>
+      </div> -->
       <div class="columns">
         <div class="column is-8">
           <div class="cr-hand-section">

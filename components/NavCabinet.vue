@@ -136,7 +136,7 @@ openMeny(route.name);
 }
 .el-menu-cab li a,
 .el-sub-menu__title {
-  padding: 0 20px 0 0;
+  padding: 0 0px 0 0;
   color: #4e4e4e;
   font-size: 14px;
   font-weight: 700;

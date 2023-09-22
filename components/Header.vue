@@ -26,7 +26,7 @@ const logout = () => {
         </div>
         <div class="level-right">
           <nuxt-link v-if="!authenticated" to="/login" class="mr-3">
-            <button class="button is-success is-outlined bt-c-suss-line">
+            <button class="button is-light is-warning bt-c-suss-line">
               <span class="icon">
                 <icon name="solar:login-3-broken" />
               </span>
@@ -34,7 +34,7 @@ const logout = () => {
             </button>
           </nuxt-link>
           <nuxt-link v-if="!authenticated" to="/registration">
-            <button class="button is-success bt-c-suss">
+            <button class="button is-warning bt-c-suss">
               <span class="icon">
                 <icon name="solar:user-circle-broken" />
               </span>
@@ -42,7 +42,7 @@ const logout = () => {
             </button>
           </nuxt-link>
           <nuxt-link v-if="authenticated" to="/cabinet" class="mr-3">
-            <button class="button is-light bt-c-suss-line">
+            <button class="button is-light is-warning bt-c-suss-line">
               <span class="icon">
                 <icon name="fluent:layer-diagonal-person-20-filled" />
               </span>
@@ -51,7 +51,7 @@ const logout = () => {
           </nuxt-link>
           <button
             v-if="authenticated"
-            class="button is-dark bt-c-suss"
+            class="button is-light bt-c-suss"
             @click="logout"
           >
             <span class="icon">
