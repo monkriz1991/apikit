@@ -16,25 +16,27 @@ const addProject = (item) => {
     visibleModal.value = item.value;
   }
 };
+watch(visibleModal, (newVal, oldVal) => {
+  if(!newVal && oldVal) getListProjects().then((response)=>{ListOfApp.value = response.data?.value?.results});
+})
 /**
  * функция получает список всех приложений пользователя
  * @returns {Promise<void>}
  */
-const { data: getListProjects, pending } = await BaseApiFetch("/apps/", {
-  method: "get",
-});
+const getListProjects = async () => await BaseApiFetch("/apps/", {method: "get"});
 /**
  *
  */
 const deleteProject = async (id)=>{return BaseApiFetch(`/apps/${id}`, {method: "delete"});}
 const dellProject = async (id) => {
-   ElMessageBox.confirm("Удаление записи безвозратно!", "Внимание", {
+   ElMessageBox.confirm("Удаление записи безвозвратно!", "Внимание", {
       confirmButtonText: "Удалить",
       cancelButtonText: "Отмена",
       type: "warning",
     })
       .then(() => {
         deleteProject(id).then(()=>{
+          getListProjects().then((response)=>{ListOfApp.value = response.data?.value?.results});
           ElMessage({
           type: "success",
           message: "Успешно удалена",
@@ -48,10 +50,14 @@ const dellProject = async (id) => {
       })
 };
 
-ListOfApp.value = getListProjects?.value?.results;
-if (ListOfApp.value.length) {
-  createShow.value = true;
-}
+getListProjects().then((response)=>{
+  ListOfApp.value = response.data?.value?.results;
+  if (ListOfApp.value.length) {
+    createShow.value = true;
+  }
+
+});
+
 </script>
 <template>
   <div>

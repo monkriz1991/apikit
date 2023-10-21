@@ -26,8 +26,7 @@ const getClients = async () =>{
 const dialogPjectadd = async () => {
   const { user } = storeToRefs(useAuthStore());
   const clients = await getClients()
-  console.log(clients.value.results[0])
-  const { data, pending } = await BaseApiFetch("/apps/", {
+  const { data, pending } = BaseApiFetch("/apps/", {
     method: "post",
     body: {
       name: formAccessibility.nameProject,
@@ -35,7 +34,15 @@ const dialogPjectadd = async () => {
       comment: formAccessibility.descriptionProject,
       client: clients.value.results[0]?.id,
     },
+  }).then((response)=>{
+    console.log(response)
+    if(response.data.value) visibleModal.value = false;
+    if(response.error.value){
+      alert(JSON.stringify(response.error.value.data))
+    }
+
   });
+
 };
 
 const formAccessibility = reactive({
