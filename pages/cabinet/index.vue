@@ -2,6 +2,7 @@
 import { storeToRefs } from "pinia";
 import { useAuthStore } from "/store/auth";
 import { BaseApiFetch } from "~/composables/BaseApiFetch";
+import {ElMessage, ElMessageBox} from "element-plus";
 
 const createShow = ref(false);
 let ListOfApp = ref([]);
@@ -22,8 +23,29 @@ const addProject = (item) => {
 const { data: getListProjects, pending } = await BaseApiFetch("/apps/", {
   method: "get",
 });
+/**
+ *
+ */
+const deleteProject = async (id)=>{return BaseApiFetch(`/apps/${id}`, {method: "delete"});}
 const dellProject = async (id) => {
-  alert(id);
+   ElMessageBox.confirm("Удаление записи безвозратно!", "Внимание", {
+      confirmButtonText: "Удалить",
+      cancelButtonText: "Отмена",
+      type: "warning",
+    })
+      .then(() => {
+        deleteProject(id).then(()=>{
+          ElMessage({
+          type: "success",
+          message: "Успешно удалена",
+        });
+        }).catch((err)=>{
+          ElMessage({
+          type: "info",
+          message: "Удаление отменено",
+        });
+        })
+      })
 };
 
 ListOfApp.value = getListProjects?.value?.results;
