@@ -6,7 +6,6 @@ import {ElMessage, ElMessageBox} from "element-plus";
 
 const createShow = ref(false);
 let ListOfApp = ref([]);
-const apiArr = ref(["catalogCompany", "AboutCompany", "my_product"]);
 const { $openDell } = useNuxtApp();
 const visibleModal = ref(false);
 const addProject = (item) => {
@@ -24,10 +23,19 @@ watch(visibleModal, (newVal, oldVal) => {
  * @returns {Promise<void>}
  */
 const getListProjects = async () => await BaseApiFetch("/apps/", {method: "get"});
+
 /**
- *
+ * удаляет приложение пользователя
  */
 const deleteProject = async (id)=>{return BaseApiFetch(`/apps/${id}`, {method: "delete"});}
+
+/**
+ * удаляет таблицу пользователя
+ * @param id
+ * @returns {Promise<_AsyncData<any, FetchError<any> | null> & Promise<_AsyncData<any, FetchError<any> | null>>>}
+ */
+const deleteApiRequest = async (id)=>{return BaseApiFetch(`/entities/${id}`, {method: "delete"});}
+
 const dellProject = async (id) => {
    ElMessageBox.confirm("Удаление записи безвозвратно!", "Внимание", {
       confirmButtonText: "Удалить",
@@ -49,6 +57,14 @@ const dellProject = async (id) => {
         })
       })
 };
+
+const deleteApi = async (id)=>{
+  let res = $openDell().then((answer)=>{
+    if(answer) deleteApiRequest(id).then((response)=>{
+      getListProjects().then((response)=>{ListOfApp.value = response.data?.value?.results});
+    })
+  })
+}
 
 getListProjects().then((response)=>{
   ListOfApp.value = response.data?.value?.results;
@@ -102,7 +118,7 @@ getListProjects().then((response)=>{
                             </button>
                             <button
                               class="button is-small button-dell"
-                              @click.prevent="$openDell"
+                              @click.prevent="deleteApi(api.id)"
                             >
                               Удалить
                             </button>
