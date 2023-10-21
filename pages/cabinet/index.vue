@@ -2,10 +2,10 @@
 import { storeToRefs } from "pinia";
 import { useAuthStore } from "/store/auth";
 import { BaseApiFetch } from "~/composables/BaseApiFetch";
+import {ElMessage, ElMessageBox} from "element-plus";
 
 const createShow = ref(false);
 let ListOfApp = ref([]);
-const apiArr = ref(["catalogCompany", "AboutCompany", "my_product"]);
 const { $openDell } = useNuxtApp();
 const visibleModal = ref(false);
 const addProject = (item) => {
@@ -15,21 +15,65 @@ const addProject = (item) => {
     visibleModal.value = item.value;
   }
 };
+watch(visibleModal, (newVal, oldVal) => {
+  if(!newVal && oldVal) getListProjects().then((response)=>{ListOfApp.value = response.data?.value?.results});
+})
 /**
  * функция получает список всех приложений пользователя
  * @returns {Promise<void>}
  */
-const { data: getListProjects, pending } = await BaseApiFetch("/apps/", {
-  method: "get",
-});
+const getListProjects = async () => await BaseApiFetch("/apps/", {method: "get"});
+
+/**
+ * удаляет приложение пользователя
+ */
+const deleteProject = async (id)=>{return BaseApiFetch(`/apps/${id}`, {method: "delete"});}
+
+/**
+ * удаляет таблицу пользователя
+ * @param id
+ * @returns {Promise<_AsyncData<any, FetchError<any> | null> & Promise<_AsyncData<any, FetchError<any> | null>>>}
+ */
+const deleteApiRequest = async (id)=>{return BaseApiFetch(`/entities/${id}`, {method: "delete"});}
+
 const dellProject = async (id) => {
-  alert(id);
+   ElMessageBox.confirm("Удаление записи безвозвратно!", "Внимание", {
+      confirmButtonText: "Удалить",
+      cancelButtonText: "Отмена",
+      type: "warning",
+    })
+      .then(() => {
+        deleteProject(id).then(()=>{
+          getListProjects().then((response)=>{ListOfApp.value = response.data?.value?.results});
+          ElMessage({
+          type: "success",
+          message: "Успешно удалена",
+        });
+        }).catch((err)=>{
+          ElMessage({
+          type: "info",
+          message: "Удаление отменено",
+        });
+        })
+      })
 };
 
-ListOfApp.value = getListProjects?.value?.results;
-if (ListOfApp.value.length) {
-  createShow.value = true;
+const deleteApi = async (id)=>{
+  let res = $openDell().then((answer)=>{
+    if(answer) deleteApiRequest(id).then((response)=>{
+      getListProjects().then((response)=>{ListOfApp.value = response.data?.value?.results});
+    })
+  })
 }
+
+getListProjects().then((response)=>{
+  ListOfApp.value = response.data?.value?.results;
+  if (ListOfApp.value.length) {
+    createShow.value = true;
+  }
+
+});
+
 </script>
 <template>
   <div>
@@ -74,7 +118,7 @@ if (ListOfApp.value.length) {
                             </button>
                             <button
                               class="button is-small button-dell"
-                              @click.prevent="$openDell"
+                              @click.prevent="deleteApi(api.id)"
                             >
                               Удалить
                             </button>
